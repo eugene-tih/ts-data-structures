@@ -1,0 +1,47 @@
+{
+  "name": "ts-data-structures",
+  "version": "1.0.0",
+  "description": "All basic and popular data structures are written in TypeScript",
+  "main": "assets/pages/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier:check": "prettier --check \"src/**/*.js\"",
+    "develop:watch": "nodemon develop.sh",
+    "develop:server": "http-server"
+  },
+  "keywords": [
+    "typescript",
+    "data",
+    "structures"
+  ],
+  "author": "Eugene Tykhonov <yevhen.tykhonov@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^2.0.0",
+    "typescript": "^3.6.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "execMap": {
+      "sh": "bash"
+    },
+    "watch": [
+      "./assets"
+    ],
+    "delay": 2500,
+    "ext": "js,css,html"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  }
+}
