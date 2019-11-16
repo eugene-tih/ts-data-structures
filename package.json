@@ -2,12 +2,14 @@
   "name": "ts-data-structures",
   "version": "1.0.0",
   "description": "All basic and popular data structures are written in TypeScript",
-  "main": "assets/pages/index.html",
+  "main": "examples/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier:check": "prettier --check \"src/**/*.js\"",
-    "develop:watch": "nodemon develop.sh",
-    "develop:server": "http-server"
+    "test": "jest",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "develop:watch": "nodemon config/develop.sh && http-server",
+    "build:tsc": "tsc -p ./tsconfig.json",
+    "build:rollup": "rollup --config rollup.config.js",
+    "prettier:check": "prettier --check \"src/**/*.js\""
   },
   "keywords": [
     "typescript",
@@ -17,12 +19,15 @@
   "author": "Eugene Tykhonov <yevhen.tykhonov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^24.0.21",
     "http-server": "^0.11.1",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "pretty-quick": "^2.0.0",
+    "rollup": "^1.27.0",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "husky": {
@@ -40,6 +45,19 @@
     ],
     "delay": 2500,
     "ext": "js,css,html"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/*.spec.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
   },
   "dependencies": {
     "normalize.css": "^8.0.1"

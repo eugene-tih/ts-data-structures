@@ -2,6 +2,7 @@
 
 rm -rf ./examples
 mkdir ./examples
+mkdir ./examples/pages
 
 # bundle styles
 cat ./node_modules/normalize.css/normalize.css \

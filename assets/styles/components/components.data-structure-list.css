@@ -43,6 +43,10 @@
     background: linear-gradient(to right, #141e30, #243b55);
 }
 
+.c-data-structure-list__item:nth-child(3) .c-data-structure-list__item-box {
+    background: linear-gradient(to right, #d9a7c7, #fffcdc);
+}
+
 .c-data-structure-list__item use {
     fill: var(--color-text-primary);
 }
