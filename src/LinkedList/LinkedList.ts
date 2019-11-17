@@ -103,8 +103,6 @@ export class LinkedList<T> implements ILinkedList<T> {
             return void 0;
         }
 
-        let node = this.first;
-
         // Remove self referencing for garbage collector
         while (this.first) {
             const temp = this.first.next;
@@ -113,7 +111,7 @@ export class LinkedList<T> implements ILinkedList<T> {
             this.first.previous = null;
             this.first.next = null;
 
-            node = temp;
+            this.first = temp;
         }
 
         this.first = null;

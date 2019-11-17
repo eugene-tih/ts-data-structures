@@ -1,0 +1,30 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.o-grid {
+    height: 100vh;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.c-section {
+    max-width: 80%;
+    padding: 12px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #1e1e3f;
+    color: #ccc;
+}
+
+.c-section__title {
+    font-size: 24px;
+}
+
+.c-section__button {
+    display: block;
+    margin: 10px auto;
+}

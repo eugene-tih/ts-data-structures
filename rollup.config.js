@@ -1,7 +1,11 @@
 export default {
-    input: 'src/main.js',
+    input: 'compiled/LinkedList/LinkedList.js',
     output: {
         file: 'bundle.js',
-        format: 'iife'
-    }
+        format: 'cjs',
+        exports: 'named',
+        esModule: false,
+        strict: false
+    },
+    treeshake: false
 };

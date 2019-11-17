@@ -1,8 +1,0 @@
-html {
-    font-family: var(--font-family);
-    font-size: var(--size-font);
-    line-height: var(--size-line-height);
-    overflow-y: scroll;
-    min-height: 100%;
-    color: var(--color-text-primary);
-}

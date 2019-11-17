@@ -12,10 +12,10 @@ describe('LinkedList', () => {
     });
 
     it('should add LinkedListNode after another LinkedListNode', () => {
-        // const linkedList = new LinkedList();
+        // const LinkedList = new LinkedList();
         // const linkedListItem = new LinkedListNode('Hello');
-        // linkedList.addAfter(linkedListItem, 'q')
-        // linkedList
+        // LinkedList.addAfter(linkedListItem, 'q')
+        // LinkedList
     });
 
     describe('Tests connected to inserting into beginning', () => {
