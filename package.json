@@ -1,14 +1,15 @@
 {
   "name": "ts-data-structures",
   "version": "1.0.0",
-  "description": "All basic and popular data structures are written in TypeScript",
+  "description": "All basic and popular data structures are written with TypeScript",
   "main": "index.html",
   "scripts": {
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-    "develop:watch": "nodemon config/develop.sh",
+    "build": "node ./config/build.js",
     "build:tsc": "tsc -p ./tsconfig.json",
     "build:rollup": "rollup --config rollup.config.js",
+    "develop": "nodemon config/develop.sh",
     "http-server": "http-server",
     "prettier:check": "prettier --check \"src/**/*.js\""
   },

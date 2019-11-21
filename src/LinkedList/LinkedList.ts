@@ -99,10 +99,6 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 
     public clear(): void {
-        if (this.count === 0) {
-            return void 0;
-        }
-
         // Remove self referencing for garbage collector
         while (this.first) {
             const temp = this.first.next;
@@ -120,14 +116,85 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 
     public contains(value: T): boolean {
-        if (this.count === 0) {
-            return false;
+        return this.find(value)
+            ? true
+            : false;
+    }
+
+    public copyTo(array: T[], index: number): void {
+        let node = this.first;
+
+        if (index === void 0) {
+            index = 0;
+        }
+
+        while (node) {
+            array[index] = node.value;
+            node = node.next;
+            index += 1;
+        }
+    }
+
+    public find(value: T): ILinkedListNode<T> | null {
+        let node = this.first;
+
+        while (node) {
+            if (this.__comparer(node.value, value)) {
+                return node;
+            }
+
+            node = node.next;
+        }
+
+        return null;
+    }
+
+    public findLast(value: T): ILinkedListNode<T> | null {
+        let node = this.last;
+
+        while (node) {
+            if (this.__comparer(node.value, value)) {
+                return node;
+            }
+
+            node = node.previous;
+        }
+
+        return null;
+    }
+
+    public remove(linkedListNode: ILinkedListNode<T>): void;
+    public remove(value: T): boolean;
+    public remove(linkedListNodeOrValue: ILinkedListNode<T> | T): boolean | void {
+        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+
+        if (isArgumentLinkedListNode) {
+            const linkedListNode = linkedListNodeOrValue as ILinkedListNode<T>;
+            const linkedListNodePrevious = linkedListNode.previous;
+            const linkedListNodeNext = linkedListNode.next;
+
+            if (linkedListNodePrevious) {
+                linkedListNodePrevious.next = linkedListNodeNext;
+            }
+
+            if (linkedListNodeNext) {
+                linkedListNodeNext.previous = linkedListNodePrevious;
+            }
+
+            linkedListNode.list = null;
+            linkedListNode.previous = null;
+            linkedListNode.next = null;
+            this.count -= 1;
+
+            return void 0;
         }
 
         let node = this.first;
 
         while (node) {
-            if (this.__comparer(node.value, value)) {
+            if (this.__comparer(node.value, linkedListNodeOrValue as T)) {
+                this.count -= 1;
+
                 return true;
             }
 
@@ -137,24 +204,33 @@ export class LinkedList<T> implements ILinkedList<T> {
         return false;
     }
 
-    public copyTo(array: T[], index: number): void {}
+    public removeFirst(): void {
+        if (!this.first) {
+            return void 0;
+        }
 
-    public find(value: T): ILinkedListNode<T> | null {
-        // if (!)
-        return null;
+        const temp = this.first;
+        this.first = this.first.next;
+
+        temp.list = null;
+        temp.previous = null;
+        temp.next = null;
+        this.count -= 1;
     }
 
-    public findLast(value: T): ILinkedListNode<T> | null {
-        return null;
+    public removeLast(): void {
+        if (!this.last) {
+            return void 0;
+        }
+
+        const temp = this.last;
+        this.last = this.last.previous;
+
+        temp.list = null;
+        temp.previous = null;
+        temp.next = null;
+        this.count -= 1;
     }
-
-    public remove(linkedListNode: ILinkedListNode<T>): void;
-    public remove(value: T): boolean;
-    public remove(linkedListNodeOrValue: ILinkedListNode<T> | T): boolean | void {}
-
-    public removeFirst(): void {}
-
-    public removeLast(): void {}
 
     private __defaultComparer(valueA: T, valueB: T): boolean {
         return valueA === valueB;

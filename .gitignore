@@ -47,3 +47,5 @@ node_modules/
 # Project files #
 #################
 .env
+./compiled
+./build

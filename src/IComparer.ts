@@ -1,1 +1,1 @@
-export type IComparer<T, U> = (objectA: T, objectB: U) => boolean; // Exposes a method that compares two objects.
+export type IComparer<T, U> = (valueA: T, valueB: U) => boolean; // Exposes a method that compares two objects.
