@@ -1,7 +1,7 @@
-import {IQueue} from './IQueue';
+import {IStack} from './IStack';
 import {IComparer} from '../IComparer';
 
-export class Queue<T> implements IQueue<T> {
+export class Stack<T> implements IStack<T> {
     public count = 0;
 
     private readonly __array: T[];
@@ -49,26 +49,26 @@ export class Queue<T> implements IQueue<T> {
         }
     }
 
-    dequeue(): T {
-        if (!this.count) {
-            throw this.__errorCreator('Queue contains no elements');
-        }
-
-        this.count -= 1;
-        return this.__array.shift() as T;
-    }
-
-    enqueue(value: T): void {
-        this.count += 1;
-        this.__array.push(value);
-    }
-
     peek(): T {
         if (!this.count) {
-            throw this.__errorCreator('Queue contains no elements');
+            throw this.__errorCreator('Stack contains no elements');
         }
 
         return this.__array[0];
+    }
+
+    pop(): T {
+        if (!this.count) {
+            throw this.__errorCreator('Stack contains no elements');
+        }
+
+        this.count -= 1;
+        return this.__array.pop() as T;
+    }
+
+    push(value: T): void {
+        this.count += 1;
+        this.__array.push(value);
     }
 
     toArray(): T[] {
@@ -90,7 +90,7 @@ export class Queue<T> implements IQueue<T> {
 
     private __errorCreator(message: string): Error {
         const error = new Error(message);
-        error.name = 'TQueue';
+        error.name = 'TStack';
 
         return error;
     }

@@ -3,7 +3,7 @@ import {LinkedListNode} from './LinkedListNode';
 import {ILinkedListNode} from './ILinkedListNode';
 
 describe('LinkedList', () => {
-    it('should create LinkedList structure with default property values', () => {
+    it('should create empty LinkedList structure with default property values', () => {
         const linkedList = new LinkedList<string>();
 
         expect(linkedList.first).toBeNull();

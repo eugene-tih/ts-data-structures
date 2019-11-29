@@ -12,3 +12,7 @@ Each structure is fully independent from another ones, has its own short README 
 npm install
 ``` 
 
+
+## TODO
+- Test coverage ~100%
+- Make all structures iterable using native JS iterator
