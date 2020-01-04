@@ -5,6 +5,17 @@ popular data structures. The majority of data structures based on .NET data stru
 
 Each structure is fully independent from another ones, has its own short README with some information.
 
+## List of structures
+
+* Linked List (Double)
+* Queue
+* Stack
+* Tree
+  * Binary Tree
+  * Binary Search Tree
+  * Red-Black Tree
+  * AVL Tree
+
 ## How to use this repository
 
 **Install all dependencies**
@@ -12,3 +23,6 @@ Each structure is fully independent from another ones, has its own short README 
 npm install
 ``` 
 
+## Sources
+* https://adrianmejia.com
+* https://medium.com/edureka
