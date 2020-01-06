@@ -1,7 +1,7 @@
-import {ILinkedList} from './ILinkedList';
-import {ILinkedListNode} from './ILinkedListNode';
-import {LinkedListNode} from './LinkedListNode';
-import {IComparer} from '../IComparer';
+import { ILinkedList } from "./ILinkedList";
+import { ILinkedListNode } from "./ILinkedListNode";
+import { LinkedListNode } from "./LinkedListNode";
+import { IComparer } from "../IComparer";
 
 export class LinkedList<T> implements ILinkedList<T> {
     public count: number;
@@ -22,13 +22,24 @@ export class LinkedList<T> implements ILinkedList<T> {
         this.__comparer = comparer;
     }
 
-    public addAfter(linkedListNodeReference: ILinkedListNode<T>, linkedListNode: ILinkedListNode<T>): void;
-    public addAfter(linkedListNodeReference: ILinkedListNode<T>, value: T): ILinkedListNode<T>;
-    public addAfter(linkedListNodeReference: ILinkedListNode<T>, linkedListNodeOrValue: ILinkedListNode<T> | T): ILinkedListNode<T> | void {
-        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+    public addAfter(
+        linkedListNodeReference: ILinkedListNode<T>,
+        linkedListNode: ILinkedListNode<T>
+    ): void;
+    public addAfter(
+        linkedListNodeReference: ILinkedListNode<T>,
+        value: T
+    ): ILinkedListNode<T>;
+    public addAfter(
+        linkedListNodeReference: ILinkedListNode<T>,
+        linkedListNodeOrValue: ILinkedListNode<T> | T
+    ): ILinkedListNode<T> | void {
+        const isArgumentLinkedListNode =
+            linkedListNodeOrValue instanceof LinkedListNode;
 
         const node = isArgumentLinkedListNode
-            ? linkedListNodeOrValue as ILinkedListNode<T> : new LinkedListNode<T>(linkedListNodeOrValue as T);
+            ? (linkedListNodeOrValue as ILinkedListNode<T>)
+            : new LinkedListNode<T>(linkedListNodeOrValue as T);
 
         node.previous = linkedListNodeReference;
         node.next = linkedListNodeReference.next;
@@ -37,13 +48,24 @@ export class LinkedList<T> implements ILinkedList<T> {
         return isArgumentLinkedListNode ? void 0 : node;
     }
 
-    public addBefore(linkedListNodeReference: ILinkedListNode<T>, linkedListNode: ILinkedListNode<T>): void;
-    public addBefore(linkedListNodeReference: ILinkedListNode<T>, value: T): ILinkedListNode<T>;
-    public addBefore(linkedListNodeReference: ILinkedListNode<T>, linkedListNodeOrValue: ILinkedListNode<T> | T): ILinkedListNode<T> | void {
-        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+    public addBefore(
+        linkedListNodeReference: ILinkedListNode<T>,
+        linkedListNode: ILinkedListNode<T>
+    ): void;
+    public addBefore(
+        linkedListNodeReference: ILinkedListNode<T>,
+        value: T
+    ): ILinkedListNode<T>;
+    public addBefore(
+        linkedListNodeReference: ILinkedListNode<T>,
+        linkedListNodeOrValue: ILinkedListNode<T> | T
+    ): ILinkedListNode<T> | void {
+        const isArgumentLinkedListNode =
+            linkedListNodeOrValue instanceof LinkedListNode;
 
         const node = isArgumentLinkedListNode
-            ? linkedListNodeOrValue as ILinkedListNode<T> : new LinkedListNode<T>(linkedListNodeOrValue as T);
+            ? (linkedListNodeOrValue as ILinkedListNode<T>)
+            : new LinkedListNode<T>(linkedListNodeOrValue as T);
 
         node.previous = linkedListNodeReference.previous;
         node.next = linkedListNodeReference;
@@ -54,11 +76,15 @@ export class LinkedList<T> implements ILinkedList<T> {
 
     public addFirst(linkedListNode: ILinkedListNode<T>): void;
     public addFirst(value: T): ILinkedListNode<T>;
-    public addFirst(linkedListNodeOrValue: ILinkedListNode<T>| T): ILinkedListNode<T> | void {
-        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+    public addFirst(
+        linkedListNodeOrValue: ILinkedListNode<T> | T
+    ): ILinkedListNode<T> | void {
+        const isArgumentLinkedListNode =
+            linkedListNodeOrValue instanceof LinkedListNode;
 
         const node = isArgumentLinkedListNode
-            ? linkedListNodeOrValue as ILinkedListNode<T> : new LinkedListNode<T>(linkedListNodeOrValue as T);
+            ? (linkedListNodeOrValue as ILinkedListNode<T>)
+            : new LinkedListNode<T>(linkedListNodeOrValue as T);
 
         if (this.first) {
             node.next = this.first;
@@ -77,11 +103,15 @@ export class LinkedList<T> implements ILinkedList<T> {
 
     public addLast(linkedListNode: ILinkedListNode<T>): void;
     public addLast(value: T): ILinkedListNode<T>;
-    public addLast(linkedListNodeOrValue: ILinkedListNode<T>| T): ILinkedListNode<T> | void {
-        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+    public addLast(
+        linkedListNodeOrValue: ILinkedListNode<T> | T
+    ): ILinkedListNode<T> | void {
+        const isArgumentLinkedListNode =
+            linkedListNodeOrValue instanceof LinkedListNode;
 
         const node = isArgumentLinkedListNode
-            ? linkedListNodeOrValue as ILinkedListNode<T> : new LinkedListNode<T>(linkedListNodeOrValue as T);
+            ? (linkedListNodeOrValue as ILinkedListNode<T>)
+            : new LinkedListNode<T>(linkedListNodeOrValue as T);
 
         if (this.last) {
             node.previous = this.last;
@@ -116,17 +146,11 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 
     public contains(value: T): boolean {
-        return this.find(value)
-            ? true
-            : false;
+        return this.find(value) ? true : false;
     }
 
-    public copyTo(array: T[], index: number): void {
+    public copyTo(array: T[], index: number = 0): void {
         let node = this.first;
-
-        if (index === void 0) {
-            index = 0;
-        }
 
         while (node) {
             array[index] = node.value;
@@ -165,8 +189,11 @@ export class LinkedList<T> implements ILinkedList<T> {
 
     public remove(linkedListNode: ILinkedListNode<T>): void;
     public remove(value: T): boolean;
-    public remove(linkedListNodeOrValue: ILinkedListNode<T> | T): boolean | void {
-        const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
+    public remove(
+        linkedListNodeOrValue: ILinkedListNode<T> | T
+    ): boolean | void {
+        const isArgumentLinkedListNode =
+            linkedListNodeOrValue instanceof LinkedListNode;
 
         if (isArgumentLinkedListNode) {
             const linkedListNode = linkedListNodeOrValue as ILinkedListNode<T>;
