@@ -1,8 +1,8 @@
-import {IBinaryTreeNodeCommon} from '../IBinaryTreeNodeCommon';
+import { AbstractBinaryTreeNode } from "../AbstractBinaryTreeNode";
 
-export class BinaryTreeNode<T> implements IBinaryTreeNodeCommon<T> {
-    public right: IBinaryTreeNodeCommon<T> | null;
-    public left: IBinaryTreeNodeCommon<T> | null;
+export class BinaryTreeNode<T> implements AbstractBinaryTreeNode<T> {
+    public right: BinaryTreeNode<T> | null;
+    public left: BinaryTreeNode<T> | null;
     public value: T;
 
     constructor(value: T) {

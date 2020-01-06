@@ -1,75 +1,25 @@
-import {IComparer} from '../../IComparer';
-import {IBinaryTreeCommon} from '../IBinaryTreeCommon';
-import {BinaryTreeNode} from './BinaryTreeNode';
-import {IBinaryTreeNodeCommon} from '../IBinaryTreeNodeCommon';
+import { AbstractBinaryTree } from "../AbstractBinaryTree";
+import { BinaryTreeNode } from "./BinaryTreeNode";
 
-export class BinaryTree<T> implements IBinaryTreeCommon<T> {
-    private __parent: IBinaryTreeNodeCommon<T> | null;
-    private __size: number;
-
-    private __comparer: IComparer<T, T>;
-
+export class BinaryTree<T> extends AbstractBinaryTree<T> {
     public constructor() {
-        this.__parent = null;
-        this.__size = 0;
-
-        this.__comparer = this.__defaultComparer;
+        super("BinaryTree");
     }
-
-    public setComparer(comparer: IComparer<T, T>): void {
-        this.__comparer = comparer;
-    }
-
-    public getSize(): number {
-        return this.__size;
-    }
-
-    public getHeight(): number {
-        let height: number = 0;
-
-        if (!this.__parent) {
-            return height;
-        }
-
-        let currentNode: IBinaryTreeNodeCommon<T> = this.__parent;
-        const queue: IBinaryTreeNodeCommon<T>[] = [currentNode];
-
-        do {
-            height += 1;
-
-            let i: number;
-            let len: number;
-            for (i = 0, len = queue.length; i < len; i += 1) {
-                currentNode = queue.pop() as IBinaryTreeNodeCommon<T>;
-
-                if (currentNode.left !== null) {
-                    queue.push(currentNode.left);
-                }
-                if (currentNode.right !== null) {
-                    queue.push(currentNode.right);
-                }
-            }
-        } while (queue.length);
-
-        queue.length = 0;
-        return height;
-    }
-
 
     public insert(value: T): this {
-        this.__size += 1;
+        this._size += 1;
 
-        if (!this.__parent) {
-            this.__parent = new BinaryTreeNode(value);
+        if (!this._parent) {
+            this._parent = new BinaryTreeNode(value);
 
             return this;
         }
 
-        let currentNode: IBinaryTreeNodeCommon<T> = this.__parent;
-        const queue: IBinaryTreeNodeCommon<T>[] = [currentNode];
+        let currentNode: BinaryTreeNode<T> = this._parent;
+        const queue: BinaryTreeNode<T>[] = [currentNode];
 
         while (queue.length !== 0) {
-            currentNode = queue.pop() as IBinaryTreeNodeCommon<T>;
+            currentNode = queue.shift() as BinaryTreeNode<T>;
 
             if (currentNode.left === null) {
                 currentNode = currentNode.left = new BinaryTreeNode(value);
@@ -89,93 +39,96 @@ export class BinaryTree<T> implements IBinaryTreeCommon<T> {
     }
 
     public remove(value: T): this {
-        let nodeToRemove: IBinaryTreeNodeCommon<T> | null = this.search(value);
+        let nodeToRemove: BinaryTreeNode<T> | null = this.search(value);
 
         if (nodeToRemove === null) {
-            throw this.__errorCreator('Value to remove not found in the tree');
+            throw this._errorCreator("Value to remove not found in the tree");
         }
 
-        let parent: IBinaryTreeNodeCommon<T> | null = this.__parent as IBinaryTreeNodeCommon<T>;
-        let currentNode: IBinaryTreeNodeCommon<T> | null = this.__parent as IBinaryTreeNodeCommon<T>;
+        let parent: BinaryTreeNode<T> | undefined;
+        let currentNode: BinaryTreeNode<T> | null = this
+            ._parent as BinaryTreeNode<T>;
+        const queue: BinaryTreeNode<T>[] = [];
 
         while (currentNode !== null) {
             if (currentNode.right) {
-                parent = currentNode;
+                queue.push(currentNode);
                 currentNode = currentNode.right;
 
                 continue;
             }
 
             if (currentNode.left) {
-                parent = currentNode;
+                queue.push(currentNode);
                 currentNode = currentNode.left;
+                continue;
             }
 
-            if (parent === nodeToRemove) {
-                this.__parent = null;
+            parent = queue.pop();
+
+            if (!parent) {
+                this._parent = null;
                 break;
             }
 
             nodeToRemove.value = currentNode.value;
 
+            if (parent.left === currentNode) {
+                parent.left = null;
+            }
+
             if (parent.right === currentNode) {
                 parent.right = null;
             }
 
-            if (parent.left === currentNode) {
-                parent.left = null;
-            }
+            currentNode = null;
         }
 
-        parent = currentNode = nodeToRemove = null;
+        queue.length = 0;
+        this._size -= 1;
         return this;
     }
 
-    public search(value: T): IBinaryTreeNodeCommon<T> | null {
-        let currentNode: IBinaryTreeNodeCommon<T> | null = this.__parent;
+    public search(value: T): BinaryTreeNode<T> | null {
+        const compare = this.compare;
+        let currentNode: BinaryTreeNode<T> | null = this._parent;
 
         if (!currentNode) {
             return null;
         }
 
-        if (this.__comparer(currentNode.value, value)) {
+        if (compare(currentNode.value, value) === 0) {
             return currentNode;
         }
 
-        const queue: IBinaryTreeNodeCommon<T>[] = [currentNode];
+        const stack: BinaryTreeNode<T>[] = [currentNode];
 
-        while (queue.length !== 0) {
-            currentNode = queue.pop() as IBinaryTreeNodeCommon<T>;
+        while (stack.length !== 0) {
+            currentNode = stack.pop() as BinaryTreeNode<T>;
 
-            if (currentNode.left && this.__comparer(currentNode.left.value, value)) {
+            if (
+                currentNode.left &&
+                compare(currentNode.left.value, value) === 0
+            ) {
                 return currentNode.left;
             }
 
-            if (currentNode.right && this.__comparer(currentNode.right.value, value)) {
+            if (
+                currentNode.right &&
+                compare(currentNode.right.value, value) === 0
+            ) {
                 return currentNode.right;
             }
 
             if (currentNode.left) {
-                queue.push(currentNode.left);
+                stack.push(currentNode.left);
             }
 
             if (currentNode.right) {
-                queue.push(currentNode.right);
+                stack.push(currentNode.right);
             }
         }
 
         return null;
-    }
-
-
-    private __defaultComparer(valueA: T, valueB: T): boolean {
-        return valueA === valueB;
-    }
-
-    private __errorCreator(message: string): Error {
-        const error = new Error(message);
-        error.name = 'TBinaryTree';
-
-        return error;
     }
 }
