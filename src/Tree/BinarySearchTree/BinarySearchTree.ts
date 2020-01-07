@@ -85,7 +85,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             // [Second part START]
             this._size -= 1;
             // Node to remove has not any children
-            // Simply remove from the tree
+            // Simply remove it from the tree
             if (!nodeToRemove.left && !nodeToRemove.right) {
                 if (parentNode.left === nodeToRemove) {
                     parentNode.left = null;
@@ -99,7 +99,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             }
 
             // Node to remove has only one child
-            // Link parent of removed node with this child
+            // Simply replace it with its child
             if (!nodeToRemove.left || !nodeToRemove.right) {
                 let tempNode: BinarySearchTreeNode<T>;
 
@@ -122,13 +122,14 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             }
 
             // Node to remove has both children
+            // There are generally two approaches:
+            //     * replacing the data with either the next smallest element in the tree
+            //     * (commonly called the predecessor), or replacing it with the next largest
+            //     * element in the tree (commonly called the successor). For this
+            //     * assignment, use the predecessor.
+
             // Getting the inOrder successor (min value in the right subtree)
-            let tempNode: BinarySearchTreeNode<T> = nodeToRemove.right;
-
-            while (tempNode.left) {
-                tempNode = tempNode.left;
-            }
-
+            let tempNode: BinarySearchTreeNode<T> = this.__getMinValue(nodeToRemove.right);
             this.remove(tempNode.value); // without this small recursion it's too much code to remove value
             nodeToRemove.value = tempNode.value;
 
@@ -163,5 +164,15 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
         }
 
         return null;
+    }
+
+    private __getMinValue(rootNode: BinarySearchTreeNode<T>): BinarySearchTreeNode<T> {
+        let minValueNode: BinarySearchTreeNode<T> = rootNode;
+
+        while (minValueNode.left) {
+            minValueNode = minValueNode.left;
+        }
+
+        return minValueNode;
     }
 }

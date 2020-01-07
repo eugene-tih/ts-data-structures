@@ -10,12 +10,15 @@ Each structure is fully independent from another ones, has its own short README 
 -   Linked List (Double)
 -   Queue
 -   Stack
+-   Priority Queue
 -   Dictionary (HashMap)
+-   Heap
 -   Tree
     -   Binary Tree
     -   Binary Search Tree
     -   Red-Black Tree
     -   AVL Tree
+-   Bloom Filter
 
 ## How to use this repository
 
@@ -30,6 +33,7 @@ npm install
 -   https://adrianmejia.com
 -   https://medium.com/edureka
 -   https://codeburst.io
+-   https://algorithms.tutorialhorizon.com
 
 ## TODO
 

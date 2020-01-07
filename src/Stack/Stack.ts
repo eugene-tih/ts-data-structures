@@ -1,19 +1,16 @@
 import {IStack} from './IStack';
-import {IComparer} from '../IComparer';
 
 export class Stack<T> implements IStack<T> {
     public count = 0;
 
     private readonly __array: T[];
-    private __comparer: IComparer<T, T>;
 
     public constructor(size: number = 0) {
-        this.__comparer = this.__defaultComparer;
         this.__array = new Array(size);
     }
 
-    public setComparer(comparer: IComparer<T, T>): void {
-        this.__comparer = comparer;
+    public compare(valueA: T, valueB: T): number {
+        return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
     }
 
     public clear(): void {
@@ -27,7 +24,7 @@ export class Stack<T> implements IStack<T> {
         const array = this.__array;
 
         for (i = 0, len = this.count; i < len; i += 1) {
-            if (this.__comparer(array[i], value)) {
+            if (this.compare(array[i], value) === 0) {
                 return true;
             }
         }
@@ -82,10 +79,6 @@ export class Stack<T> implements IStack<T> {
         }
 
         return newArray;
-    }
-
-    private __defaultComparer(valueA: T, valueB: T): boolean {
-        return valueA === valueB;
     }
 
     private __errorCreator(message: string): Error {

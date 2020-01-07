@@ -1,5 +1,9 @@
-export interface IStack<T> {
+import {IComparer} from '../IComparer';
+
+export interface IStack<T> extends IComparer<T, T> {
     count: number; // Gets the number of elements contained in the IStack<T>.
+
+    compare(valueA: T, valueB: T): number;
     clear(): void; // Removes all nodes from the IStack<T>.
 
     contains(value: T): boolean; // Determines whether a value is in the IStack<T>.

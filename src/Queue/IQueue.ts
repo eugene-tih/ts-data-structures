@@ -1,5 +1,9 @@
-export interface IQueue<T> {
+import {IComparer} from '../IComparer';
+
+export interface IQueue<T> extends IComparer<T, T> {
     count: number; // Gets the number of elements contained in the IQueue<T>.
+
+    compare(valueA: T, valueB: T): number;
     clear(): void; // Removes all nodes from the IQueue<T>.
 
     contains(value: T): boolean; // Determines whether a value is in the IQueue<T>.
