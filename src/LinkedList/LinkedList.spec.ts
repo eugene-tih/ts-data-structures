@@ -23,6 +23,7 @@ describe('LinkedList', () => {
 
             expect(linkedList.first).toBe(linkedListNodeFirst);
             expect(linkedList.last).toBe(linkedListNodeSecond);
+            expect(linkedList.last!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
 
@@ -34,6 +35,7 @@ describe('LinkedList', () => {
 
             expect(linkedList.first!.value).toBe('Hello');
             expect(linkedList.last!.value).toBe('World');
+            expect(linkedList.last!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
     });
@@ -50,6 +52,7 @@ describe('LinkedList', () => {
 
             expect(linkedList.last).toBe(linkedListNodeSecond);
             expect(linkedList.first).toBe(linkedListNodeFirst);
+            expect(linkedList.first!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
 
@@ -61,6 +64,7 @@ describe('LinkedList', () => {
 
             expect(linkedList.last!.value).toBe('World');
             expect(linkedList.first!.value).toBe('Hello');
+            expect(linkedList.first!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
     });
@@ -78,6 +82,7 @@ describe('LinkedList', () => {
             expect(linkedListNodeReference.next).toBe(linkedListNode);
 
             expect(linkedList.last).toBe(linkedListNode);
+            expect(linkedList.last!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
 
@@ -92,6 +97,7 @@ describe('LinkedList', () => {
             expect(linkedListNodeReference.next!.value).toBe('World');
 
             expect(linkedList.last!.value).toBe('World');
+            expect(linkedList.last!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
     });
@@ -109,6 +115,7 @@ describe('LinkedList', () => {
             expect(linkedListNodeReference.previous).toBe(linkedListNode);
 
             expect(linkedList.first).toBe(linkedListNode);
+            expect(linkedList.first!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
 
@@ -123,6 +130,7 @@ describe('LinkedList', () => {
             expect(linkedListNodeReference.previous!.value).toBe('World');
 
             expect(linkedList.first!.value).toBe('World');
+            expect(linkedList.first!.list).toBe(linkedList);
             expect(linkedList.count).toBe(2);
         });
     });
@@ -135,9 +143,9 @@ describe('LinkedList', () => {
             linkedList.addLast('World');
             linkedList.addLast('John');
 
-            const linkedListNode: ILinkedListNode<string> = linkedList.find('World') as ILinkedListNode<string>;
+            const result = linkedList.find('World') as ILinkedListNode<string>;
 
-            expect(linkedListNode.value).toBe('World');
+            expect(result.value).toBe('World');
         });
 
         it('should find a last item', () => {
@@ -148,9 +156,9 @@ describe('LinkedList', () => {
             linkedList.addLast('World');
             linkedList.addLast(linkedListNodeToSearch);
 
-            const linkedListNode: ILinkedListNode<string> = linkedList.findLast('World') as ILinkedListNode<string>;
+            const result = linkedList.findLast('World') as ILinkedListNode<string>;
 
-            expect(linkedListNode).toBe(linkedListNodeToSearch);
+            expect(result).toBe(linkedListNodeToSearch);
         });
 
         it('should return `null` if could not find an item', () => {
@@ -158,7 +166,9 @@ describe('LinkedList', () => {
 
             linkedList.addLast('Hello');
 
-            expect(linkedList.find('World')).toBeNull();
+            const result = linkedList.find('World');
+
+            expect(result).toBeNull();
         });
 
         it('should find containing value and return `true`', () => {
@@ -168,12 +178,14 @@ describe('LinkedList', () => {
             linkedList.addLast('World');
             linkedList.addLast('John');
 
-            expect(linkedList.contains('World')).toBe(true);
+            const result = linkedList.contains('World');
+
+            expect(result).toBe(true);
         });
     });
 
     describe('Tests connected to removing', () => {
-        it('should remove node', () => {
+        it('should remove node', () =>    {
             const linkedList = new LinkedList<string>();
             const linkedListNodeToRemove = new LinkedListNode('World');
 
@@ -215,6 +227,34 @@ describe('LinkedList', () => {
             expect(response).toBe(false);
         });
 
-        it('should remove', () => {});
+        it('should remove first node', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            linkedList.removeFirst();
+
+            expect(linkedList.find('Hello')).toBeNull();
+            expect(linkedList.first!.value).toBe('World');
+            expect(linkedList.first!.previous).toBeNull();
+            expect(linkedList.count).toBe(2);
+        });
+
+        it('should remove last node', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            linkedList.removeLast();
+
+            expect(linkedList.find('John')).toBeNull();
+            expect(linkedList.last!.value).toBe('World');
+            expect(linkedList.last!.next).toBeNull();
+            expect(linkedList.count).toBe(2);
+        });
     });
 });

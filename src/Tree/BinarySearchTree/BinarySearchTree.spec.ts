@@ -37,7 +37,9 @@ describe('BinarySearchTree', () => {
                 .insert(1)
                 .insert(3);
 
-            expect(binarySearchTree.search(3)!.value).toBe(3);
+            const result = binarySearchTree.search(3);
+
+            expect(result!.value).toBe(3);
         });
 
         it('should return `null` if could not find an item', () => {
@@ -50,7 +52,9 @@ describe('BinarySearchTree', () => {
                 .insert(1)
                 .insert(3);
 
-            expect(binarySearchTree.search(100)).toBeNull();
+            const result = binarySearchTree.search(100);
+
+            expect(result).toBeNull();
         });
     });
 
@@ -189,7 +193,9 @@ describe('BinarySearchTree', () => {
                 .insert(5)
                 .insert(7);
 
-            expect(binarySearchTree.traverseInOrder()).toEqual([1, 2, 3, 4, 5, 6, 7]);
+            const result = binarySearchTree.traverseInOrder();
+
+            expect(result).toEqual([1, 2, 3, 4, 5, 6, 7]);
         });
 
         it('should return items in preOrder order', () => {
@@ -204,7 +210,9 @@ describe('BinarySearchTree', () => {
                 .insert(5)
                 .insert(7);
 
-            expect(binarySearchTree.traversePreOrder()).toEqual([4, 2, 1, 3, 6, 5, 7]);
+            const result = binarySearchTree.traversePreOrder();
+
+            expect(result).toEqual([4, 2, 1, 3, 6, 5, 7]);
         });
 
         it('should return items in postOrder order', () => {
@@ -219,7 +227,9 @@ describe('BinarySearchTree', () => {
                 .insert(5)
                 .insert(7);
 
-            expect(binarySearchTree.traversePostOrder()).toEqual([1, 3, 2, 5, 7, 6, 4]);
+            const result = binarySearchTree.traversePostOrder();
+
+            expect(result).toEqual([1, 3, 2, 5, 7, 6, 4]);
         });
     });
 });

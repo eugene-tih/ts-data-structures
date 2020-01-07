@@ -35,7 +35,9 @@ describe('BinaryTree', () => {
                 .insert('John')
                 .insert('Wayne');
 
-            expect(binaryTree.search('John')!.value).toBe('John');
+            const result = binaryTree.search('John');
+
+            expect(result!.value).toBe('John');
         });
 
         it('should return `null` if could not find an item', () => {
@@ -47,7 +49,9 @@ describe('BinaryTree', () => {
                 .insert('John')
                 .insert('Wayne');
 
-            expect(binaryTree.search('Ingrid Bergman')).toBeNull();
+            const result = binaryTree.search('Ingrid Bergman');
+
+            expect(result).toBeNull();
         });
     });
 
@@ -149,7 +153,9 @@ describe('BinaryTree', () => {
                 .insert('Clint')
                 .insert('Eastwood');
 
-            expect(binaryTree.traverseInOrder()).toEqual(['Wayne', 'World', 'Clint', 'Hello', 'Eastwood', 'John']);
+            const result = binaryTree.traverseInOrder();
+
+            expect(result).toEqual(['Wayne', 'World', 'Clint', 'Hello', 'Eastwood', 'John']);
         });
 
         it('should return items in preOrder order', () => {
@@ -163,7 +169,9 @@ describe('BinaryTree', () => {
                 .insert('Clint')
                 .insert('Eastwood');
 
-            expect(binaryTree.traversePreOrder()).toEqual(['Hello', 'World', 'Wayne', 'Clint', 'John', 'Eastwood']);
+            const result = binaryTree.traversePreOrder();
+
+            expect(result).toEqual(['Hello', 'World', 'Wayne', 'Clint', 'John', 'Eastwood']);
         });
 
         it('should return items in postOrder order', () => {
@@ -177,7 +185,9 @@ describe('BinaryTree', () => {
                 .insert('Clint')
                 .insert('Eastwood');
 
-            expect(binaryTree.traversePostOrder()).toEqual(['Wayne', 'Clint', 'World', 'Eastwood', 'John', 'Hello']);
+            const result = binaryTree.traversePostOrder();
+
+            expect(result).toEqual(['Wayne', 'Clint', 'World', 'Eastwood', 'John', 'Hello']);
         });
     });
 });

@@ -33,6 +33,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         if (linkedListNodeReference === this.last) {
             this.last = node;
         }
+        node.list = this;
         this.count += 1;
 
         return isArgumentLinkedListNode ? void 0 : node;
@@ -57,6 +58,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         if (linkedListNodeReference === this.first) {
             this.first = node;
         }
+        node.list = this;
         this.count += 1;
 
         return isArgumentLinkedListNode ? void 0 : node;
@@ -203,6 +205,10 @@ export class LinkedList<T> implements ILinkedList<T> {
         const temp = this.first;
         this.first = this.first.next;
 
+        if (this.first) {
+            this.first.previous = null;
+        }
+
         temp.list = null;
         temp.previous = null;
         temp.next = null;
@@ -216,6 +222,10 @@ export class LinkedList<T> implements ILinkedList<T> {
 
         const temp = this.last;
         this.last = this.last.previous;
+
+        if (this.last) {
+            this.last.next = null;
+        }
 
         temp.list = null;
         temp.previous = null;
