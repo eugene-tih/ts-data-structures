@@ -1,155 +1,155 @@
-import {IBinaryTreeCommon} from './IBinaryTreeCommon'
-import {AbstractBinaryTreeNode} from './AbstractBinaryTreeNode'
-import {IBinaryTreeNodeCommon} from './IBinaryTreeNodeCommon'
+import {IBinaryTreeCommon} from './IBinaryTreeCommon';
+import {AbstractBinaryTreeNode} from './AbstractBinaryTreeNode';
+import {IBinaryTreeNodeCommon} from './IBinaryTreeNodeCommon';
 
 export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
-    protected _root: AbstractBinaryTreeNode<T> | null
-    protected _size: number
+    protected _root: AbstractBinaryTreeNode<T> | null;
+    protected _size: number;
 
-    private __errorName: string
+    private __errorName: string;
 
     protected constructor(className: string) {
-        this.__errorName = 'T' + className
-        this._root = null
-        this._size = 0
+        this.__errorName = 'T' + className;
+        this._root = null;
+        this._size = 0;
     }
 
     public compare(valueA: T, valueB: T): number {
-        return valueA < valueB ? -1 : valueA > valueB ? 1 : 0
+        return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
     }
 
     get root() {
-        return this._root
+        return this._root;
     }
 
     public getSize(): number {
-        return this._size
+        return this._size;
     }
 
     public getHeight(): number {
-        let height: number = -1
+        let height: number = -1;
 
         if (!this._root) {
-            return height
+            return height;
         }
 
-        let currentNode: AbstractBinaryTreeNode<T> = this._root
-        const stack: AbstractBinaryTreeNode<T>[] = [currentNode]
+        let currentNode: AbstractBinaryTreeNode<T> = this._root;
+        const stack: AbstractBinaryTreeNode<T>[] = [currentNode];
 
         do {
-            height += 1
+            height += 1;
 
-            let i: number
-            let len: number
+            let i: number;
+            let len: number;
             for (i = 0, len = stack.length; i < len; i += 1) {
-                currentNode = stack.pop() as AbstractBinaryTreeNode<T>
+                currentNode = stack.pop() as AbstractBinaryTreeNode<T>;
 
                 if (currentNode.left !== null) {
-                    stack.push(currentNode.left)
+                    stack.push(currentNode.left);
                 }
                 if (currentNode.right !== null) {
-                    stack.push(currentNode.right)
+                    stack.push(currentNode.right);
                 }
             }
-        } while (stack.length)
+        } while (stack.length);
 
-        stack.length = 0
-        return height
+        stack.length = 0;
+        return height;
     }
 
-    public abstract insert(value: T): this
+    public abstract insert(value: T): this;
 
-    public abstract remove(value: T): this
+    public abstract remove(value: T): this;
 
-    public abstract search(value: T): IBinaryTreeNodeCommon<T> | null
+    public abstract search(value: T): IBinaryTreeNodeCommon<T> | null;
 
     public traverseInOrder(): T[] {
         if (!this._root) {
-            return []
+            return [];
         }
 
-        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root
-        const stack: IBinaryTreeNodeCommon<T>[] = []
-        const list: T[] = []
+        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root;
+        const stack: IBinaryTreeNodeCommon<T>[] = [];
+        const list: T[] = [];
 
         while (currentNode || stack.length) {
             while (currentNode) {
-                stack.push(currentNode)
-                currentNode = currentNode.left
+                stack.push(currentNode);
+                currentNode = currentNode.left;
             }
 
-            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>
-            list.push(currentNode.value)
+            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>;
+            list.push(currentNode.value);
 
-            currentNode = currentNode.right
+            currentNode = currentNode.right;
         }
 
-        return list
+        return list;
     }
 
     public traversePreOrder(): T[] {
         if (!this._root) {
-            return []
+            return [];
         }
 
-        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root
-        const stack: IBinaryTreeNodeCommon<T>[] = [currentNode]
-        const list: T[] = []
+        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root;
+        const stack: IBinaryTreeNodeCommon<T>[] = [currentNode];
+        const list: T[] = [];
 
         while (stack.length) {
-            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>
-            list.push(currentNode.value)
+            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>;
+            list.push(currentNode.value);
 
             if (currentNode.right) {
-                stack.push(currentNode.right)
+                stack.push(currentNode.right);
             }
 
             if (currentNode.left) {
-                stack.push(currentNode.left)
+                stack.push(currentNode.left);
             }
         }
 
-        return list
+        return list;
     }
 
     public traversePostOrder(): T[] {
         if (!this._root) {
-            return []
+            return [];
         }
 
-        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root
-        const stack: IBinaryTreeNodeCommon<T>[] = []
-        const list: T[] = []
+        let currentNode: IBinaryTreeNodeCommon<T> | null = this._root;
+        const stack: IBinaryTreeNodeCommon<T>[] = [];
+        const list: T[] = [];
 
         do {
             while (currentNode) {
                 if (currentNode.right) {
-                    stack.push(currentNode.right)
+                    stack.push(currentNode.right);
                 }
 
-                stack.push(currentNode)
-                currentNode = currentNode.left
+                stack.push(currentNode);
+                currentNode = currentNode.left;
             }
 
-            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>
+            currentNode = stack.pop() as IBinaryTreeNodeCommon<T>;
 
             if (currentNode.right && stack[stack.length - 1] === currentNode.right) {
-                stack.pop()
-                stack.push(currentNode)
-                currentNode = currentNode.right
-                continue
+                stack.pop();
+                stack.push(currentNode);
+                currentNode = currentNode.right;
+                continue;
             }
 
-            list.push(currentNode.value)
-            currentNode = null
-        } while (stack.length)
+            list.push(currentNode.value);
+            currentNode = null;
+        } while (stack.length);
 
-        return list
+        return list;
     }
 
     protected _errorCreator(message: string): Error {
-        const error = new Error(message)
-        error.name = this.__errorName
-        return error
+        const error = new Error(message);
+        error.name = this.__errorName;
+        return error;
     }
 }
