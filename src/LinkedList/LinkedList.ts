@@ -30,6 +30,11 @@ export class LinkedList<T> implements ILinkedList<T> {
         node.next = linkedListNodeReference.next;
         linkedListNodeReference.next = node;
 
+        if (linkedListNodeReference === this.last) {
+            this.last = node;
+        }
+        this.count += 1;
+
         return isArgumentLinkedListNode ? void 0 : node;
     }
 
@@ -48,6 +53,11 @@ export class LinkedList<T> implements ILinkedList<T> {
         node.previous = linkedListNodeReference.previous;
         node.next = linkedListNodeReference;
         linkedListNodeReference.previous = node;
+
+        if (linkedListNodeReference === this.first) {
+            this.first = node;
+        }
+        this.count += 1;
 
         return isArgumentLinkedListNode ? void 0 : node;
     }
@@ -165,22 +175,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         const isArgumentLinkedListNode = linkedListNodeOrValue instanceof LinkedListNode;
 
         if (isArgumentLinkedListNode) {
-            const linkedListNode = linkedListNodeOrValue as ILinkedListNode<T>;
-            const linkedListNodePrevious = linkedListNode.previous;
-            const linkedListNodeNext = linkedListNode.next;
-
-            if (linkedListNodePrevious) {
-                linkedListNodePrevious.next = linkedListNodeNext;
-            }
-
-            if (linkedListNodeNext) {
-                linkedListNodeNext.previous = linkedListNodePrevious;
-            }
-
-            linkedListNode.list = null;
-            linkedListNode.previous = null;
-            linkedListNode.next = null;
-            this.count -= 1;
+            this.__removeNode(linkedListNodeOrValue as ILinkedListNode<T>);
 
             return void 0;
         }
@@ -189,7 +184,7 @@ export class LinkedList<T> implements ILinkedList<T> {
 
         while (node) {
             if (this.compare(node.value, linkedListNodeOrValue as T) === 0) {
-                this.count -= 1;
+                this.__removeNode(node);
 
                 return true;
             }
@@ -225,6 +220,32 @@ export class LinkedList<T> implements ILinkedList<T> {
         temp.list = null;
         temp.previous = null;
         temp.next = null;
+        this.count -= 1;
+    }
+
+    private __removeNode(linkedListNode: ILinkedListNode<T>): void {
+        const linkedListNodePrevious = linkedListNode.previous;
+        const linkedListNodeNext = linkedListNode.next;
+
+        if (linkedListNodePrevious) {
+            linkedListNodePrevious.next = linkedListNodeNext;
+        }
+
+        if (linkedListNodeNext) {
+            linkedListNodeNext.previous = linkedListNodePrevious;
+        }
+
+        if (linkedListNode === this.first) {
+            this.first = linkedListNodeNext;
+        }
+
+        if (linkedListNode === this.last) {
+            this.last = linkedListNodePrevious;
+        }
+
+        linkedListNode.list = null;
+        linkedListNode.previous = null;
+        linkedListNode.next = null;
         this.count -= 1;
     }
 }

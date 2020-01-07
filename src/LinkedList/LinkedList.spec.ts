@@ -3,7 +3,7 @@ import {LinkedListNode} from './LinkedListNode';
 import {ILinkedListNode} from './ILinkedListNode';
 
 describe('LinkedList', () => {
-    it('should create empty LinkedList structure with default property values', () => {
+    it('should create empty structure with default property values', () => {
         const linkedList = new LinkedList<string>();
 
         expect(linkedList.first).toBeNull();
@@ -11,189 +11,210 @@ describe('LinkedList', () => {
         expect(linkedList.count).toBe(0);
     });
 
-    it('should add LinkedListNode after another LinkedListNode', () => {
-        // const LinkedList = new LinkedList();
-        // const linkedListItem = new LinkedListNode('Hello');
-        // LinkedList.addAfter(linkedListItem, 'q')
-        // LinkedList
-    });
-
-    describe('Tests connected to inserting into beginning', () => {
-
-        it('should add LinkedListNode as first node into empty LinkedList', () => {
+    describe('Tests connected to adding value/node to the beginning', () => {
+        it('should add node to the beginning', () => {
             const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
 
-            linkedList.addFirst(linkedListNode);
+            const linkedListNodeSecond = new LinkedListNode('World');
+            const linkedListNodeFirst = new LinkedListNode('Hello');
 
-            expect(linkedList.first).toBe(linkedListNode);
-            expect(linkedList.last).toBe(linkedListNode);
-            expect(linkedList.count).toBe(1);
-        });
+            linkedList.addFirst(linkedListNodeSecond);
+            linkedList.addFirst(linkedListNodeFirst);
 
-        it('should add LinkedListNode as first node into non-empty LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-            const linkedListNodeThatShouldBeFirst = new LinkedListNode('World');
-
-            linkedList.addFirst(linkedListNode);
-            linkedList.addFirst(linkedListNodeThatShouldBeFirst);
-
-            expect(linkedList.first).toBe(linkedListNodeThatShouldBeFirst);
-            expect(linkedList.last).toBe(linkedListNode);
+            expect(linkedList.first).toBe(linkedListNodeFirst);
+            expect(linkedList.last).toBe(linkedListNodeSecond);
             expect(linkedList.count).toBe(2);
-
-            expect((linkedList.last as ILinkedListNode<string>).previous).toBe(linkedList.first);
         });
 
-        it('should add value as first node into empty LinkedList', () => {
+        it('should add value to the beginning', () => {
             const linkedList = new LinkedList<string>();
 
-            linkedList.addFirst('Hello');
-
-            expect((linkedList.first as ILinkedListNode<string>).value).toBe('Hello');
-            expect((linkedList.last as ILinkedListNode<string>).value).toBe('Hello');
-            expect(linkedList.count).toBe(1);
-        });
-
-        it('should add value as first node into non-empty LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-
-            linkedList.addFirst('Hello');
             linkedList.addFirst('World');
+            linkedList.addFirst('Hello');
 
-            expect((linkedList.first as ILinkedListNode<string>).value).toBe('World');
-            expect((linkedList.last as ILinkedListNode<string>).value).toBe('Hello');
+            expect(linkedList.first!.value).toBe('Hello');
+            expect(linkedList.last!.value).toBe('World');
             expect(linkedList.count).toBe(2);
-
-            expect((linkedList.last as ILinkedListNode<string>).previous).toBe(linkedList.first);
-        });
-
-        it('should method return correct value', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-
-            const returnValueFromAddedNode = linkedList.addFirst(linkedListNode);
-            const returnValueFromAddedValue = linkedList.addFirst('Hello');
-
-            expect(returnValueFromAddedNode).toBeUndefined();
-            expect(returnValueFromAddedValue).toBeInstanceOf(LinkedListNode);
-            expect(returnValueFromAddedValue.value).toBe('Hello');
-        });
-
-        it('should added node has link to LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-
-            const returnValue = linkedList.addFirst('World');
-            linkedList.addFirst(linkedListNode);
-
-            expect(linkedListNode.list).toBe(linkedList);
-            expect(returnValue.list).toBe(linkedList);
         });
     });
 
-    describe('Tests connected to inserting into ending', () => {
-
-        it('should add LinkedListNode as last node into empty LinkedList', () => {
+    describe('Tests connected to adding value/node to the ending', () => {
+        it('should add node to the ending', () => {
             const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
 
-            linkedList.addLast(linkedListNode);
+            const linkedListNodeFirst = new LinkedListNode('Hello');
+            const linkedListNodeSecond = new LinkedListNode('World');
 
-            expect(linkedList.last).toBe(linkedListNode);
-            expect(linkedList.first).toBe(linkedListNode);
-            expect(linkedList.count).toBe(1);
-        });
+            linkedList.addLast(linkedListNodeFirst);
+            linkedList.addLast(linkedListNodeSecond);
 
-        it('should add LinkedListNode as last node into non-empty LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-            const linkedListNodeThatShouldBeLast = new LinkedListNode('World');
-
-            linkedList.addLast(linkedListNode);
-            linkedList.addLast(linkedListNodeThatShouldBeLast);
-
-            expect(linkedList.last).toBe(linkedListNodeThatShouldBeLast);
-            expect(linkedList.first).toBe(linkedListNode);
+            expect(linkedList.last).toBe(linkedListNodeSecond);
+            expect(linkedList.first).toBe(linkedListNodeFirst);
             expect(linkedList.count).toBe(2);
-
-            expect((linkedList.first as ILinkedListNode<string>).next).toBe(linkedList.last);
         });
 
-        it('should add value as last node into empty LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-
-            linkedList.addLast('Hello');
-
-            expect((linkedList.last as ILinkedListNode<string>).value).toBe('Hello');
-            expect((linkedList.first as ILinkedListNode<string>).value).toBe('Hello');
-            expect(linkedList.count).toBe(1);
-        });
-
-        it('should add value as last node into non-empty LinkedList', () => {
+        it('should add value to the ending', () => {
             const linkedList = new LinkedList<string>();
 
             linkedList.addLast('Hello');
             linkedList.addLast('World');
 
-            expect((linkedList.last as ILinkedListNode<string>).value).toBe('World');
-            expect((linkedList.first as ILinkedListNode<string>).value).toBe('Hello');
+            expect(linkedList.last!.value).toBe('World');
+            expect(linkedList.first!.value).toBe('Hello');
             expect(linkedList.count).toBe(2);
-
-            expect((linkedList.first as ILinkedListNode<string>).next).toBe(linkedList.last);
-        });
-
-        it('should method return correct value', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-
-            const returnValueFromAddedNode = linkedList.addLast(linkedListNode);
-            const returnValueFromAddedValue = linkedList.addLast('Hello');
-
-            expect(returnValueFromAddedNode).toBeUndefined();
-            expect(returnValueFromAddedValue).toBeInstanceOf(LinkedListNode);
-            expect(returnValueFromAddedValue.value).toBe('Hello');
-        });
-
-        it('should added node has link to LinkedList', () => {
-            const linkedList = new LinkedList<string>();
-            const linkedListNode = new LinkedListNode('Hello');
-
-            const returnValue = linkedList.addLast('World');
-            linkedList.addLast(linkedListNode);
-
-            expect(linkedListNode.list).toBe(linkedList);
-            expect(returnValue.list).toBe(linkedList);
         });
     });
 
-    describe('Tests connected to clearing', () => {
-
-        it('should clear empty LinkedList and return all properties to default value', () => {
+    describe('Tests connected to adding value/node after specific node', () => {
+        it('should add node after specific one', () => {
             const linkedList = new LinkedList<string>();
 
-            linkedList.clear();
+            const linkedListNodeReference = new LinkedListNode('Hello');
+            const linkedListNode = new LinkedListNode('World');
 
-            expect(linkedList.first).toBeNull();
-            expect(linkedList.last).toBeNull();
-            expect(linkedList.count).toBe(0);
+            linkedList.addFirst(linkedListNodeReference);
+            linkedList.addAfter(linkedListNodeReference, linkedListNode);
+
+            expect(linkedListNodeReference.next).toBe(linkedListNode);
+
+            expect(linkedList.last).toBe(linkedListNode);
+            expect(linkedList.count).toBe(2);
         });
 
-        it('should clear non-empty LinkedList and return all properties to default value', () => {
+        it('should add value after specific node', () => {
             const linkedList = new LinkedList<string>();
-            const returnValueA = linkedList.addFirst('Hello');
-            const returnValueB = linkedList.addFirst('World');
-            const returnValueC = linkedList.addFirst('Again');
 
-            linkedList.clear();
+            const linkedListNodeReference = new LinkedListNode('Hello');
 
-            // expect(returnValueA.next).toBeNull();
-            // expect(returnValueB.next).toBeNull();
+            linkedList.addFirst(linkedListNodeReference);
+            linkedList.addAfter(linkedListNodeReference, 'World');
 
-            expect(linkedList.first).toBeNull();
-            expect(linkedList.last).toBeNull();
-            expect(linkedList.count).toBe(0);
+            expect(linkedListNodeReference.next!.value).toBe('World');
+
+            expect(linkedList.last!.value).toBe('World');
+            expect(linkedList.count).toBe(2);
         });
+    });
+
+    describe('Tests connected to adding value/node before specific node', () => {
+        it('should add node before specific one', () => {
+            const linkedList = new LinkedList<string>();
+
+            const linkedListNodeReference = new LinkedListNode('Hello');
+            const linkedListNode = new LinkedListNode('World');
+
+            linkedList.addFirst(linkedListNodeReference);
+            linkedList.addBefore(linkedListNodeReference, linkedListNode);
+
+            expect(linkedListNodeReference.previous).toBe(linkedListNode);
+
+            expect(linkedList.first).toBe(linkedListNode);
+            expect(linkedList.count).toBe(2);
+        });
+
+        it('should add value before specific node', () => {
+            const linkedList = new LinkedList<string>();
+
+            const linkedListNodeReference = new LinkedListNode('Hello');
+
+            linkedList.addFirst(linkedListNodeReference);
+            linkedList.addBefore(linkedListNodeReference, 'World');
+
+            expect(linkedListNodeReference.previous!.value).toBe('World');
+
+            expect(linkedList.first!.value).toBe('World');
+            expect(linkedList.count).toBe(2);
+        });
+    });
+
+    describe('Tests connected to searching', () => {
+        it('should find an item', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            const linkedListNode: ILinkedListNode<string> = linkedList.find('World') as ILinkedListNode<string>;
+
+            expect(linkedListNode.value).toBe('World');
+        });
+
+        it('should find a last item', () => {
+            const linkedList = new LinkedList<string>();
+            const linkedListNodeToSearch = new LinkedListNode('World');
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast(linkedListNodeToSearch);
+
+            const linkedListNode: ILinkedListNode<string> = linkedList.findLast('World') as ILinkedListNode<string>;
+
+            expect(linkedListNode).toBe(linkedListNodeToSearch);
+        });
+
+        it('should return `null` if could not find an item', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+
+            expect(linkedList.find('World')).toBeNull();
+        });
+
+        it('should find containing value and return `true`', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            expect(linkedList.contains('World')).toBe(true);
+        });
+    });
+
+    describe('Tests connected to removing', () => {
+        it('should remove node', () => {
+            const linkedList = new LinkedList<string>();
+            const linkedListNodeToRemove = new LinkedListNode('World');
+
+            linkedList.addLast('Hello');
+            linkedList.addLast(linkedListNodeToRemove);
+            linkedList.addLast('John');
+
+            linkedList.remove(linkedListNodeToRemove);
+
+            expect(linkedListNodeToRemove.next).toBeNull();
+            expect(linkedListNodeToRemove.previous).toBeNull();
+            expect(linkedList.find('World')).toBeNull();
+            expect(linkedList.count).toBe(2);
+        });
+
+        it('should remove value and return `true`', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            const response = linkedList.remove('World');
+
+            expect(response).toBe(true);
+            expect(linkedList.find('World')).toBeNull();
+            expect(linkedList.count).toBe(2);
+        });
+
+        it('should return `false` if could not remove value', () => {
+            const linkedList = new LinkedList<string>();
+
+            linkedList.addLast('Hello');
+            linkedList.addLast('World');
+            linkedList.addLast('John');
+
+            const response = linkedList.remove('Wayne');
+
+            expect(response).toBe(false);
+        });
+
+        it('should remove', () => {});
     });
 });
