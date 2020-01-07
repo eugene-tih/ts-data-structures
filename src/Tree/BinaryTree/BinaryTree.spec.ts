@@ -35,7 +35,7 @@ describe("BinaryTree", () => {
         expect(binaryTree.search("John")!.value).toBe("John");
     });
 
-    it("should return `null` if did not find an item", () => {
+    it("should return `null` if could not find an item", () => {
         const binaryTree = new BinaryTree<string>();
 
         binaryTree
@@ -74,7 +74,7 @@ describe("BinaryTree", () => {
         expect(binaryTree.getHeight()).toBe(-1);
     });
 
-    it("should throw an error if did not remove an item", () => {
+    it("should throw an error if could not remove an item", () => {
         const binaryTree = new BinaryTree<string>();
 
         binaryTree.insert("Hello");

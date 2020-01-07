@@ -1,4 +1,4 @@
-#Binary Search Tree
+# Binary Search Tree
 
 Binary Search Trees or BST for short are a particular application of binary trees.
 BST has at most two nodes (like all binary trees). However, the values are in such a way
@@ -11,9 +11,9 @@ does not allow duplicates.
 
 ## Complexity
 
-| Access | Search | Insertion | Deletion |
-| ------ | ------ | --------- | -------- |
-| O(n)   | O(n)   | O(n)      | O(n)     |
+| Space | Search | Insertion | Deletion |
+| ----- | ------ | --------- | -------- |
+| O(n)  | O(n)   | O(n)      | O(n)     |
 
 ## Example
 

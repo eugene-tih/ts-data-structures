@@ -90,12 +90,12 @@ export class BinaryTree<T> extends AbstractBinaryTree<T> {
     }
 
     public search(value: T): BinaryTreeNode<T> | null {
-        const compare = this.compare;
-        let currentNode: BinaryTreeNode<T> | null = this._parent;
-
-        if (!currentNode) {
+        if (!this._parent) {
             return null;
         }
+
+        const compare = this.compare;
+        let currentNode: BinaryTreeNode<T> | null = this._parent;
 
         if (compare(currentNode.value, value) === 0) {
             return currentNode;
