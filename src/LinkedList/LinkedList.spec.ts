@@ -185,7 +185,7 @@ describe('LinkedList', () => {
     });
 
     describe('Tests connected to removing', () => {
-        it('should remove node', () =>    {
+        it('should remove node', () => {
             const linkedList = new LinkedList<string>();
             const linkedListNodeToRemove = new LinkedListNode('World');
 
@@ -256,5 +256,33 @@ describe('LinkedList', () => {
             expect(linkedList.last!.next).toBeNull();
             expect(linkedList.count).toBe(2);
         });
+    });
+
+    it('should clear structure', () => {
+        const linkedList = new LinkedList<string>();
+
+        linkedList.addLast('Hello');
+        linkedList.addLast('World');
+        linkedList.addLast('John');
+        linkedList.clear();
+
+        expect(linkedList.count).toBe(0);
+        expect(linkedList.first).toBeNull();
+        expect(linkedList.last).toBeNull();
+        expect(linkedList.find('World')).toBeNull();
+    });
+
+    it('should copy values to array', () => {
+        const linkedList = new LinkedList<string>();
+
+        linkedList.addLast('Hello');
+        linkedList.addLast('World');
+        linkedList.addLast('John');
+
+        const array: string[] = [];
+
+        linkedList.copyTo(array);
+
+        expect(array).toEqual(['Hello', 'World', 'John']);
     });
 });
