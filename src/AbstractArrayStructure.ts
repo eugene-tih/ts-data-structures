@@ -1,8 +1,13 @@
 export abstract class AbstractArrayStructure<T> {
-    public count = 0;
+    public count: number;
     protected readonly _array: T[];
 
-    protected constructor(size: number = 0) {
+    private readonly __errorName: string;
+
+    protected constructor(className: string, size: number = 0) {
+        this.__errorName = 'T' + className;
+
+        this.count = 0;
         this._array = new Array(size);
     }
 
@@ -15,7 +20,7 @@ export abstract class AbstractArrayStructure<T> {
         this._array.length = 0;
     }
 
-    contains(value: T): boolean {
+    public contains(value: T): boolean {
         let i: number;
         let len: number;
         const array = this._array;
@@ -29,7 +34,7 @@ export abstract class AbstractArrayStructure<T> {
         return false;
     }
 
-    copyTo(array: T[], index: number): void {
+    public copyTo(array: T[], index: number): void {
         let i: number;
         let len: number;
         const originArray = this._array;
@@ -41,5 +46,24 @@ export abstract class AbstractArrayStructure<T> {
         for (i = 0, len = this.count; i < len; i += 1, index += 1) {
             array[index] = originArray[i];
         }
+    }
+
+    public toArray(): T[] {
+        const newArray = [];
+        const originArray = this._array;
+
+        let i: number;
+        let len: number;
+        for (i = 0, len = this.count; i < len; i += 1) {
+            newArray[i] = originArray[i];
+        }
+
+        return newArray;
+    }
+
+    protected _errorCreator(message: string): Error {
+        const error = new Error(message);
+        error.name = this.__errorName;
+        return error;
     }
 }

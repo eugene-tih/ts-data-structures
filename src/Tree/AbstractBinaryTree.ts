@@ -6,7 +6,7 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
     protected _root: AbstractBinaryTreeNode<T> | null;
     protected _size: number;
 
-    private __errorName: string;
+    private readonly __errorName: string;
 
     protected constructor(className: string) {
         this.__errorName = 'T' + className;
