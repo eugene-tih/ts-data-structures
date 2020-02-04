@@ -34,6 +34,8 @@ npm install
 -   https://medium.com/edureka
 -   https://codeburst.io
 -   https://algorithms.tutorialhorizon.com
+-   https://referencesource.microsoft.com
+-   https://blog.markvincze.com/
 
 ## TODO
 
