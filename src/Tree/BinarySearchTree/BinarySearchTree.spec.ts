@@ -111,7 +111,7 @@ describe('BinarySearchTree', () => {
 
             expect(binarySearchTree.search(4)).toBeNull();
             expect(binarySearchTree.getSize()).toBe(5);
-            expect(binarySearchTree.getHeight()).toBe(3);
+            expect(binarySearchTree.getHeight()).toBe(2);
         });
 
         it('should throw an error if could not remove an item', () => {

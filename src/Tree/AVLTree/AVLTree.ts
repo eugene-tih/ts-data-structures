@@ -53,8 +53,8 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
         // Start walking from added node to the top parent
         currentNode = newNode as AVLTreeNode<T>;
 
-        while (currentNode && currentNode.parent) {
-            this.__balance(currentNode.parent);
+        while (currentNode) {
+            this.__balance(currentNode);
             currentNode = currentNode.parent;
         }
 
@@ -62,7 +62,64 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
     }
 
     public remove(value: T): this {
-        console.log(value);
+        const nodeToRemove: AVLTreeNode<T> | null = this.search(value);
+
+        if (!nodeToRemove) {
+            throw this._errorCreator('Value to remove was not found in the tree');
+        }
+
+        let parentNode = (nodeToRemove.parent || this._root) as AVLTreeNode<T>;
+
+        // Node to remove has not any children
+        // Simply remove it from the tree
+        if (!nodeToRemove.left && !nodeToRemove.right) {
+            if (parentNode.left === nodeToRemove) {
+                parentNode.left = null;
+            } else if (parentNode.right === nodeToRemove) {
+                parentNode.right = null;
+            } else {
+                this._root = null;
+            }
+
+            this.__balance(parentNode);
+            this._size -= 1;
+            return this;
+        }
+
+        // Node to remove has only one child
+        // Simply replace it with its child
+        if (!nodeToRemove.left || !nodeToRemove.right) {
+            const childNode = (nodeToRemove.left || nodeToRemove.right) as AVLTreeNode<T>;
+
+            if (parentNode.left === nodeToRemove) {
+                parentNode.left = childNode;
+                childNode.parent = parentNode;
+            } else if (parentNode.right === nodeToRemove) {
+                parentNode.right = childNode;
+                childNode.parent = parentNode;
+            } else {
+                // if we remove root node
+                this._root = childNode;
+                childNode.parent = null;
+            }
+
+            this.__balance(childNode);
+            this._size -= 1;
+            return this;
+        }
+
+        // Node to remove has both children
+        // There are generally two approaches:
+        //     * replacing the data with either the next smallest element in the tree
+        //     * (commonly called the predecessor), or replacing it with the next largest
+        //     * element in the tree (commonly called the successor). For this
+        //     * assignment, use the predecessor.
+
+        // Getting the inOrder successor (min value in the right subtree)
+        const tempNode = this._getMinValue(nodeToRemove.right as AVLTreeNode<T>);
+        this.remove(tempNode.value); // without this small recursion it's too much code to remove value
+        nodeToRemove.value = tempNode.value;
+
         return this;
     }
 
@@ -102,7 +159,10 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
             }
 
             // Left-Left rotation
-            return this.__rotateLeft(rootNode);
+            const newRootNode = this.__rotateLeft(rootNode);
+            this.__updateParentPointerAfterDoubleRotation(newRootNode, rootNode);
+
+            return newRootNode;
         }
 
         if (this.__getBalanceFactor(rootNode) === -2) {
@@ -112,7 +172,10 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
             }
 
             // Right-Right rotation
-            return this.__rotateRight(rootNode);
+            const newRootNode = this.__rotateRight(rootNode);
+            this.__updateParentPointerAfterDoubleRotation(newRootNode, rootNode);
+
+            return newRootNode;
         }
 
         return rootNode;
@@ -128,8 +191,8 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
         tempNode.parent = rootNode.parent;
         rootNode.parent = tempNode;
 
-        if (tempNode.parent === null) {
-            this._root = tempNode;
+        if (rootNode.left) {
+            rootNode.left.parent = rootNode;
         }
 
         this.__fixHeight(rootNode);
@@ -147,8 +210,8 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
         tempNode.parent = rootNode.parent;
         rootNode.parent = tempNode;
 
-        if (tempNode.parent === null) {
-            this._root = tempNode;
+        if (rootNode.right) {
+            rootNode.right.parent = rootNode;
         }
 
         this.__fixHeight(rootNode);
@@ -170,5 +233,20 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
         const leftHeight: number = this.__getNodeHeight(node.left);
         const rightHeight: number = this.__getNodeHeight(node.right);
         node.height = Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    private __updateParentPointerAfterDoubleRotation(newChildNode: AVLTreeNode<T>, oldChildNode: AVLTreeNode<T>): void {
+        const parentNode: AVLTreeNode<T> | null = newChildNode.parent;
+
+        if (!parentNode) {
+            this._root = newChildNode;
+            return;
+        }
+
+        if (parentNode.right === oldChildNode) {
+            parentNode.right = newChildNode;
+        } else {
+            parentNode.left = newChildNode;
+        }
     }
 }
