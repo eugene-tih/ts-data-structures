@@ -182,7 +182,6 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
     }
 
     // Rotations
-    // Left-Left Heavy (LL)
     private __rotateRight(rootNode: AVLTreeNode<T>): AVLTreeNode<T> {
         const tempNode: AVLTreeNode<T> = rootNode.left as AVLTreeNode<T>;
         rootNode.left = tempNode.right;
@@ -201,7 +200,6 @@ export class AVLTree<T> extends AbstractBinaryTree<T> {
         return tempNode;
     }
 
-    // Right-Right Heavy (RR)
     private __rotateLeft(rootNode: AVLTreeNode<T>): AVLTreeNode<T> {
         const tempNode: AVLTreeNode<T> = rootNode.right as AVLTreeNode<T>;
         rootNode.right = tempNode.left;
