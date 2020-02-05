@@ -42,7 +42,7 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
             let i: number;
             let len: number;
             for (i = 0, len = stack.length; i < len; i += 1) {
-                currentNode = stack.pop() as AbstractBinaryTreeNode<T>;
+                currentNode = stack.shift() as AbstractBinaryTreeNode<T>;
 
                 if (currentNode.left !== null) {
                     stack.push(currentNode.left);

@@ -1,5 +1,6 @@
 export interface IBinaryTreeNodeCommon<T> {
-    left: IBinaryTreeNodeCommon<T> | null;
-    right: IBinaryTreeNodeCommon<T> | null;
-    value:  T;
+    parent: this | null;
+    left: this | null;
+    right: this | null;
+    value: T;
 }

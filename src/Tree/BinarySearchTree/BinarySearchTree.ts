@@ -23,6 +23,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             compareResult = compare(value, currentNode.value);
 
             if (compareResult === 0) {
+                this._size -= 1;
                 break;
             }
 
