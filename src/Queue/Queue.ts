@@ -11,13 +11,11 @@ export class Queue<T> extends AbstractArrayStructure<T> {
             throw this._errorCreator('Queue contains no elements');
         }
 
-        this.count -= 1;
         return this._array.shift() as T;
     }
 
     // Adds an object to the end of the Queue<T>
     enqueue(value: T): void {
-        this.count += 1;
         this._array.push(value);
     }
 

@@ -1,14 +1,15 @@
 export abstract class AbstractArrayStructure<T> {
-    public count: number;
     protected readonly _array: T[];
 
     private readonly __errorName: string;
 
     protected constructor(className: string, size: number = 0) {
         this.__errorName = 'T' + className;
-
-        this.count = 0;
         this._array = new Array(size);
+    }
+
+    get count(): number {
+        return this._array.length;
     }
 
     public compare(valueA: T, valueB: T): number {
@@ -16,34 +17,37 @@ export abstract class AbstractArrayStructure<T> {
     }
 
     public clear(): void {
-        this.count = 0;
         this._array.length = 0;
     }
 
-    public contains(value: T): boolean {
-        let i: number;
-        let len: number;
+    public find(value: T): number {
+        const compare = this.compare;
         const array = this._array;
 
-        for (i = 0, len = this.count; i < len; i += 1) {
-            if (this.compare(array[i], value) === 0) {
-                return true;
+        let i: number;
+        let len: number;
+
+        for (i = 0, len = array.length; i < len; i += 1) {
+            if (compare(array[i], value) === 0) {
+                return i;
             }
         }
 
-        return false;
+        return -1;
     }
 
-    public copyTo(array: T[], index: number): void {
+    public contains(value: T): boolean {
+        const result = this.find(value);
+
+        return result > -1;
+    }
+
+    public copyTo(array: T[], index: number = 0): void {
         let i: number;
         let len: number;
         const originArray = this._array;
 
-        if (index === void 0) {
-            index = 0;
-        }
-
-        for (i = 0, len = this.count; i < len; i += 1, index += 1) {
+        for (i = 0, len = originArray.length; i < len; i += 1, index += 1) {
             array[index] = originArray[i];
         }
     }
@@ -54,7 +58,7 @@ export abstract class AbstractArrayStructure<T> {
 
         let i: number;
         let len: number;
-        for (i = 0, len = this.count; i < len; i += 1) {
+        for (i = 0, len = originArray.length; i < len; i += 1) {
             newArray[i] = originArray[i];
         }
 

@@ -20,13 +20,11 @@ export class Stack<T> extends AbstractArrayStructure<T> {
             throw this._errorCreator('Stack contains no elements');
         }
 
-        this.count -= 1;
         return this._array.pop() as T;
     }
 
     // Inserts an object at the top of the Stack<T>.
     push(value: T): void {
-        this.count += 1;
         this._array.push(value);
     }
 }
