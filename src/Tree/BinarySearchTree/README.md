@@ -18,10 +18,12 @@ does not allow duplicates.
 ## Example
 
 ```javascript
-const myLinkedList = new LinkedList();
-myLinkedList.addFirst("Hello");
-myLinkedList.addLast("World");
+const myBinarySearchTree = new BinarySearchTree();
+myBinarySearchTree.insert('Hello');
+myBinarySearchTree.insert('World');
 
-myLinkedList.contains("Bark!");
-myLinkedList.clear();
+myBinarySearchTree.search('Bark!');
+myBinarySearchTree.remove('Hello');
+
+myBinarySearchTree.traverseInOrder();
 ```

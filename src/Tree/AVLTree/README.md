@@ -1,4 +1,4 @@
-#Binary Tree
+# AVL Tree
 
 AVL tree is widely known as _self-balancing binary search tree_.
 It is named after its creator (Georgy Adelson-Velsky and Landis’ tree).
@@ -7,17 +7,19 @@ At anytime if height difference becomes greater than 1 then tree balancing is do
 
 ## Complexity
 
-| Access | Search | Insertion | Deletion |
-| ------ | ------ | --------- | -------- |
-| O(n)   | O(n)   | O(n)      | O(n)     |
+| Access    | Search    | Insertion | Deletion  |
+| --------- | --------- | --------- | --------- |
+| O(log(n)) | O(log(n)) | O(log(n)) | O(log(n)) |
 
 ## Example
 
 ```javascript
-const myLinkedList = new LinkedList();
-myLinkedList.addFirst('Hello');
-myLinkedList.addLast('World');
+const myAVLTree = new AVLTree();
+myAVLTree.insert('Hello');
+myAVLTree.insert('World');
 
-myLinkedList.contains('Bark!');
-myLinkedList.clear();
+myAVLTree.search('Bark!');
+myAVLTree.remove('Hello');
+
+myAVLTree.traverseInOrder();
 ```
