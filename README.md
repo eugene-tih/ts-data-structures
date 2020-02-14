@@ -41,3 +41,4 @@ npm install
 
 -   Test coverage ~100%
 -   Make all structures iterable using native JS iterator
+-   Add to IBinaryTreeNodeCommon parents

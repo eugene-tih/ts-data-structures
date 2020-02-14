@@ -1,12 +1,11 @@
 import {IBinaryTreeCommon} from './IBinaryTreeCommon';
-import {AbstractBinaryTreeNode} from './AbstractBinaryTreeNode';
 import {IBinaryTreeNodeCommon} from './IBinaryTreeNodeCommon';
 
 export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
-    protected _root: AbstractBinaryTreeNode<T> | null;
+    protected _root: IBinaryTreeNodeCommon<T> | null;
     protected _size: number;
 
-    private __errorName: string;
+    private readonly __errorName: string;
 
     protected constructor(className: string) {
         this.__errorName = 'T' + className;
@@ -33,8 +32,8 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
             return height;
         }
 
-        let currentNode: AbstractBinaryTreeNode<T> = this._root;
-        const stack: AbstractBinaryTreeNode<T>[] = [currentNode];
+        let currentNode: IBinaryTreeNodeCommon<T> = this._root;
+        const stack: IBinaryTreeNodeCommon<T>[] = [currentNode];
 
         do {
             height += 1;
@@ -42,7 +41,7 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
             let i: number;
             let len: number;
             for (i = 0, len = stack.length; i < len; i += 1) {
-                currentNode = stack.pop() as AbstractBinaryTreeNode<T>;
+                currentNode = stack.shift() as IBinaryTreeNodeCommon<T>;
 
                 if (currentNode.left !== null) {
                     stack.push(currentNode.left);
@@ -145,6 +144,16 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
         } while (stack.length);
 
         return list;
+    }
+
+    protected _getMinValue(rootNode: IBinaryTreeNodeCommon<T>): IBinaryTreeNodeCommon<T> {
+        let minValueNode: IBinaryTreeNodeCommon<T> = rootNode;
+
+        while (minValueNode.left) {
+            minValueNode = minValueNode.left;
+        }
+
+        return minValueNode;
     }
 
     protected _errorCreator(message: string): Error {

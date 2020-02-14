@@ -23,6 +23,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             compareResult = compare(value, currentNode.value);
 
             if (compareResult === 0) {
+                this._size -= 1;
                 break;
             }
 
@@ -48,7 +49,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
 
     public remove(value: T): this {
         if (!this._root) {
-            throw this._errorCreator('Value to remove not found in the tree');
+            throw this._errorCreator('Value to remove was not found in the tree');
         }
 
         const compare = this.compare;
@@ -63,7 +64,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             // We are looking for node to remove. If we do not find it then we will throw an error
             if (compareResult > 0) {
                 if (!nodeToRemove.right) {
-                    throw this._errorCreator('Value to remove not found in the tree');
+                    throw this._errorCreator('Value to remove was not found in the tree');
                 }
 
                 parentNode = nodeToRemove;
@@ -73,7 +74,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
 
             if (compareResult < 0) {
                 if (!nodeToRemove.left) {
-                    throw this._errorCreator('Value to remove not found in the tree');
+                    throw this._errorCreator('Value to remove was not found in the tree');
                 }
 
                 parentNode = nodeToRemove;
@@ -129,7 +130,7 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
             //     * assignment, use the predecessor.
 
             // Getting the inOrder successor (min value in the right subtree)
-            let tempNode: BinarySearchTreeNode<T> = this.__getMinValue(nodeToRemove.right);
+            let tempNode: BinarySearchTreeNode<T> = this._getMinValue(nodeToRemove.right);
             this.remove(tempNode.value); // without this small recursion it's too much code to remove value
             nodeToRemove.value = tempNode.value;
 
@@ -164,15 +165,5 @@ export class BinarySearchTree<T> extends AbstractBinaryTree<T> {
         }
 
         return null;
-    }
-
-    private __getMinValue(rootNode: BinarySearchTreeNode<T>): BinarySearchTreeNode<T> {
-        let minValueNode: BinarySearchTreeNode<T> = rootNode;
-
-        while (minValueNode.left) {
-            minValueNode = minValueNode.left;
-        }
-
-        return minValueNode;
     }
 }

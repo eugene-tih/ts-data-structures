@@ -24,6 +24,19 @@ describe('BinarySearchTree', () => {
             expect(binarySearchTree.getSize()).toBe(5);
             expect(binarySearchTree.getHeight()).toBe(2);
         });
+
+        it('should not insert already inserted item', () => {
+            const binarySearchTree = new BinarySearchTree<number>();
+
+            binarySearchTree
+                .insert(4)
+                .insert(2)
+                .insert(6)
+                .insert(2);
+
+            expect(binarySearchTree.getSize()).toBe(3);
+            expect(binarySearchTree.getHeight()).toBe(1);
+        });
     });
 
     describe('Tests connected to searching', () => {
@@ -98,7 +111,7 @@ describe('BinarySearchTree', () => {
 
             expect(binarySearchTree.search(4)).toBeNull();
             expect(binarySearchTree.getSize()).toBe(5);
-            expect(binarySearchTree.getHeight()).toBe(3);
+            expect(binarySearchTree.getHeight()).toBe(2);
         });
 
         it('should throw an error if could not remove an item', () => {
