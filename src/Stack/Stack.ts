@@ -1,6 +1,6 @@
 import {AbstractArrayStructure} from '../AbstractArrayStructure';
 
-export class Stack<T> extends AbstractArrayStructure<T> {
+export class Stack<T = never> extends AbstractArrayStructure<T> {
     constructor(size: number = 0) {
         super('Stack', size);
     }
