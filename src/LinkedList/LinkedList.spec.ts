@@ -201,7 +201,7 @@ describe('LinkedList', () => {
             expect(linkedList.count).toBe(2);
         });
 
-        it('should return `true` if remove value', () => {
+        it('should return `true` and remove value', () => {
             const linkedList = new LinkedList<string>();
 
             linkedList.addLast('Hello');

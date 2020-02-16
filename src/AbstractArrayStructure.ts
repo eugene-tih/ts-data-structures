@@ -13,7 +13,7 @@ export abstract class AbstractArrayStructure<T> {
     }
 
     public compare(valueA: T, valueB: T): number {
-        return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+        return valueA === valueB ? 0 : valueA < valueB ? -1 : 1;
     }
 
     public clear(): void {

@@ -6,8 +6,6 @@ export interface ILinkedList<T> extends IComparer<T, T> {
     first: ILinkedListNode<T> | null; // Gets the first node of the ILinkedList<T>
     last: ILinkedListNode<T> | null; // Gets the last node of the ILinkedList<T>.
 
-    compare(valueA: T, valueB: T): number;
-
     addAfter(linkedListNodeReference: ILinkedListNode<T>, linkedListNode: ILinkedListNode<T>): void; // Adds the specified new node after the specified existing node in the ILinkedList<T>.
     addAfter(linkedListNodeReference: ILinkedListNode<T>, value: T): ILinkedListNode<T>; // Adds a new node containing the specified value after the specified existing node in the ILinkedList<T>.
 

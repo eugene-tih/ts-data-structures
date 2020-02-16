@@ -2,8 +2,6 @@ import {IComparer} from '../IComparer';
 import {IBinaryTreeNodeCommon} from './IBinaryTreeNodeCommon';
 
 export interface IBinaryTreeCommon<T> extends IComparer<T, T> {
-    compare(valueA: T, valueB: T): number;
-
     getSize(): number; // Returns the number of elements in the IBinaryTreeCommon<T>
     getHeight(): number; // Return the distance (edge count) between the farthest leaf to the root in the IBinaryTreeCommon<T>
 
