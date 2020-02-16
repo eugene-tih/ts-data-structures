@@ -1,11 +1,11 @@
 export default {
-    input: 'compiled/LinkedList/LinkedList.js',
+    input: 'compiled/Main.js',
     output: {
-        file: 'bundle.js',
+        file: './build/bundle.js',
         format: 'cjs',
         exports: 'named',
         esModule: false,
-        strict: false
+        strict: false,
     },
-    treeshake: false
+    treeshake: false,
 };

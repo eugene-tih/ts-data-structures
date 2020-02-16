@@ -4,13 +4,13 @@
     "description": "All basic and popular data structures are written with TypeScript",
     "main": "index.html",
     "scripts": {
-        "test": "jest",
-        "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-        "build": "node ./config/build.js",
-        "build:tsc": "tsc -p ./tsconfig.json",
-        "build:rollup": "rollup --config rollup.config.js",
         "develop": "nodemon config/develop.sh",
         "http-server": "http-server",
+        "build": "sh ./config/build.sh",
+        "build:tsc": "tsc -p ./tsconfig.json",
+        "build:rollup": "rollup --config rollup.config.js",
+        "test": "jest",
+        "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
         "prettier:check": "prettier --check \"src/**/*.ts\""
     },
     "keywords": [

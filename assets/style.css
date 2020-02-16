@@ -11,13 +11,19 @@ body {
     align-items: center;
 }
 
+.o-background {
+    background-image: url(./cow-pattern.jpg);
+    background-position: top left;
+    background-size: 500px;
+}
+
 .c-section {
     max-width: 80%;
     padding: 12px;
     text-align: center;
     border-radius: 12px;
     background-color: #1e1e3f;
-    color: #ccc;
+    color: #fff;
 }
 
 .c-section__title {
@@ -27,4 +33,6 @@ body {
 .c-section__button {
     display: block;
     margin: 10px auto;
+    padding: 5px 20px;
+    border-radius: 4px;
 }

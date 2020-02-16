@@ -11,10 +11,10 @@ export class Heap<T = never> extends AbstractHeap<T> implements IHeap<T> {
     }
 
     public insert(value: T): this {
-        return super._insert(value);
+        return this._insert(value);
     }
 
     public remove(value: T): this {
-        return super._remove(value);
+        return this._remove(value);
     }
 }

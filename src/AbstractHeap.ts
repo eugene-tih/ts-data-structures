@@ -15,7 +15,10 @@ export abstract class AbstractHeap<T> extends AbstractArrayStructure<T> {
         let addedElementIndex = array.length - 1;
 
         // array[addedElementIndex] > array[getParentIndex(addedElementIndex)]
-        while (compare(array[addedElementIndex], array[getParentIndex(addedElementIndex)]) === 1) {
+        while (
+            compare(array[addedElementIndex], array[getParentIndex(addedElementIndex)]) === 1 &&
+            getParentIndex(addedElementIndex) > -1
+        ) {
             swap(addedElementIndex, getParentIndex(addedElementIndex));
             addedElementIndex = getParentIndex(addedElementIndex);
         }

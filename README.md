@@ -4,6 +4,7 @@ This repository contains TypeScript based examples of many
 popular data structures. The majority of data structures based on .NET data structure interfaces.
 
 Each structure is fully independent from another ones, has its own short README with some information.
+Build was tested on Mac, but probably will work on Linux and Windows.
 
 ## List of structures
 
@@ -22,10 +23,23 @@ Each structure is fully independent from another ones, has its own short README 
 
 ## How to use this repository
 
+Just to try to work with Data Structures:
+
+-   Open `index.html` file
+-   Open browser console
+-   Choose one of preferable DS and play with it
+
+Run these commands only if you want to change something:
 **Install all dependencies**
 
 ```
 npm install
+```
+
+**Make build**
+
+```
+npm run build
 ```
 
 ## Sources
@@ -39,6 +53,6 @@ npm install
 
 ## TODO
 
--   Test coverage ~100%
 -   Make all structures iterable using native JS iterator
 -   Add to IBinaryTreeNodeCommon parents
+-   Rewrite Rollup config (get rid off Main.ts file)
