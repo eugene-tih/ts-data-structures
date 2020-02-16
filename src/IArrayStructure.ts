@@ -1,7 +1,8 @@
-export interface IArrayStructure<T> {
+import {IComparer} from './IComparer';
+
+export interface IArrayStructure<T> extends IComparer<T, T> {
     count: number; // Gets the number of elements contained in the IArrayStructure<T>.
 
-    compare(valueA: T, valueB: T): number;
     clear(): void; // Removes all nodes from the IArrayStructure<T>.
 
     contains(value: T): boolean; // Determines whether a value is in the IArrayStructure<T>.

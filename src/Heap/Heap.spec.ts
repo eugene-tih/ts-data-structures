@@ -29,8 +29,8 @@ describe('Heap', () => {
         });
     });
 
-    describe('Tests connected to searching', () => {
-        it('should find an item index', () => {
+    describe('Tests connected to containing', () => {
+        it('should return `true` if contains item', () => {
             const heap = new Heap<number>();
 
             heap.insert(4)
@@ -39,12 +39,12 @@ describe('Heap', () => {
                 .insert(1)
                 .insert(3);
 
-            const result = heap.find(3);
+            const result = heap.contains(3);
 
-            expect(result).toBe(1);
+            expect(result).toBe(true);
         });
 
-        it('should return `-1` if could not find an item', () => {
+        it('should return `false` if does not contain item', () => {
             const heap = new Heap<number>();
 
             heap.insert(4)
@@ -53,9 +53,9 @@ describe('Heap', () => {
                 .insert(1)
                 .insert(3);
 
-            const result = heap.find(100);
+            const result = heap.contains(100);
 
-            expect(result).toBe(-1);
+            expect(result).toBe(false);
         });
     });
 
@@ -68,7 +68,7 @@ describe('Heap', () => {
             heap.remove(4);
 
             expect(heap.count).toBe(0);
-            expect(heap.find(4)).toBe(-1);
+            expect(heap.contains(4)).toBe(false);
             expect(heap.getMaxItem()).toBeNull();
         });
 
@@ -80,7 +80,7 @@ describe('Heap', () => {
             heap.remove(4);
 
             expect(heap.count).toBe(1);
-            expect(heap.find(4)).toBe(-1);
+            expect(heap.contains(4)).toBe(false);
             expect(heap.getMaxItem()).toBe(2);
         });
 
@@ -98,7 +98,7 @@ describe('Heap', () => {
             heap.remove(7);
 
             expect(heap.count).toBe(6);
-            expect(heap.find(7)).toBe(-1);
+            expect(heap.contains(7)).toBe(false);
             expect(heap.getMaxItem()).toBe(6);
         });
 
@@ -171,7 +171,7 @@ describe('Heap', () => {
         heap.clear();
 
         expect(heap.count).toBe(0);
-        expect(heap.find(5)).toBe(-1);
+        expect(heap.contains(5)).toBe(false);
     });
 
     it('should copy values to array', () => {

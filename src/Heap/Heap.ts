@@ -38,7 +38,7 @@ export class Heap<T> extends AbstractArrayStructure<T> implements IHeap<T> {
         const swap = this.__swap.bind(this);
         const getLeftChildIndex = this.__getLeftChildIndex;
         const getRightChildIndex = this.__getRightChildIndex;
-        let itemIndex = this.find(value);
+        let itemIndex = this._find(value);
         let continueRearrange = true;
 
         if (itemIndex < 0) {

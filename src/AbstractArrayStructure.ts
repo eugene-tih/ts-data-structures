@@ -20,24 +20,8 @@ export abstract class AbstractArrayStructure<T> {
         this._array.length = 0;
     }
 
-    public find(value: T): number {
-        const compare = this.compare;
-        const array = this._array;
-
-        let i: number;
-        let len: number;
-
-        for (i = 0, len = array.length; i < len; i += 1) {
-            if (compare(array[i], value) === 0) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
     public contains(value: T): boolean {
-        const result = this.find(value);
+        const result = this._find(value);
 
         return result > -1;
     }
@@ -63,6 +47,22 @@ export abstract class AbstractArrayStructure<T> {
         }
 
         return newArray;
+    }
+
+    protected _find(value: T): number {
+        const compare = this.compare;
+        const array = this._array;
+
+        let i: number;
+        let len: number;
+
+        for (i = 0, len = array.length; i < len; i += 1) {
+            if (compare(array[i], value) === 0) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     protected _errorCreator(message: string): Error {
