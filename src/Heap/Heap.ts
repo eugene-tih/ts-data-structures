@@ -1,7 +1,7 @@
 import {IHeap} from './IHeap';
 import {AbstractArrayStructure} from '../AbstractArrayStructure';
 
-export class Heap<T> extends AbstractArrayStructure<T> implements IHeap<T> {
+export class Heap<T = never> extends AbstractArrayStructure<T> implements IHeap<T> {
     constructor(size: number = 0) {
         super('Heap', size);
     }

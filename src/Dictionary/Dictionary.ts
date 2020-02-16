@@ -1,9 +1,12 @@
 import {IDictionary} from './IDictionary';
 import {IDictionaryEntry} from './IDictionaryEntry';
+import {DictionaryEntry} from './DictionaryEntry';
 
-export class Dictionary<TKey extends {toString(): string;}, TValue> implements IDictionary<TKey, TValue> {
-    public count: number;
-
+/**
+ * https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs
+ */
+export class Dictionary<TKey extends {toString(): string} = never, TValue = never> implements IDictionary<TKey, TValue> {
+    private __count: number;
     private __buckets: number[] | null;
     private __entries: IDictionaryEntry<TKey, TValue>[] | null;
     private __capacity: number;
@@ -16,14 +19,73 @@ export class Dictionary<TKey extends {toString(): string;}, TValue> implements I
         this.__entries = null;
         this.__freeList = -1;
         this.__freeCount = 0;
-        this.count = 0;
+        this.__count = 0;
     }
 
-    public compare(valueA: TKey, valueB: TKey): number {
+    get count(): number {
+        return this.__count - this.__freeCount;
+    }
+
+    get keys(): TKey[] {
+        const newArray: TKey[] = [];
+        const count = this.count;
+        const entries = this.__entries;
+        let i: number;
+
+        if (!entries || !entries.length) {
+            return newArray;
+        }
+
+        for (i = 0; i < count; i++) {
+            newArray[i] = entries[i].key as TKey;
+        }
+
+        return newArray;
+    }
+
+    get values(): TValue[] {
+        const newArray: TValue[] = [];
+        const count = this.count;
+        const entries = this.__entries;
+        let i: number;
+
+        if (!entries || !entries.length) {
+            return newArray;
+        }
+
+        for (i = 0; i < count; i++) {
+            newArray[i] = entries[i].value as TValue;
+        }
+
+        return newArray;
+    }
+
+    public compare(valueA: TKey | TValue, valueB: TKey | TValue): number {
         return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
     }
 
-    public add(key: TKey, value: TValue): void {
+    public get(key: TKey): TValue | null {
+        const compare = this.compare;
+        const buckets = this.__buckets as number[];
+        const entries = this.__entries as IDictionaryEntry<TKey, TValue>[];
+
+        if (buckets !== null) {
+            const hashCode = HashHelper.getHashCode<TKey>(key) & 0x7FFFFFFF;
+
+            let i: number;
+            for (i = buckets[hashCode % buckets.length]; i >= 0; i = entries[i].next) {
+                if (entries[i].hashCode == hashCode && compare(entries[i].key as TKey, key) === 0) {
+                    return entries[i].value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public add(key: TKey, value: TValue): this {
+        // if ()
+
         if (this.__buckets === null) {
             this.__initialize(this.__capacity);
         }
@@ -46,11 +108,12 @@ export class Dictionary<TKey extends {toString(): string;}, TValue> implements I
         // If we find the key in the dictionary, we update the associated value and return.
         let i: number;
         for (i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
-            if (entries[i].hashCode == hashCode && compare(entries[i].key, key)) {
+            if (entries[i].hashCode == hashCode && compare(entries[i].key as TKey, key) === 0) {
                 entries[i].value = value;
-                return;
+                return this;
             }
         }
+
 
         let index: number;
         if (this.__freeCount > 0) {
@@ -59,20 +122,22 @@ export class Dictionary<TKey extends {toString(): string;}, TValue> implements I
             index = this.__freeList;
             this.__freeList = entries[index].next;
             this.__freeCount--;
-        }
-        else {
+        } else {
             // There are no "holes" in the entries array.
-            if (this.count == entries.length) {
+            if (this.count === entries.length) {
                 // The dictionary is full, we need to increase its size by calling Resize.
                 // (After Resize, it's guaranteed that there are no holes in the array.)
-                this.__resize();
+                this.__resize(this.count);
                 targetBucket = hashCode % buckets.length;
             }
 
             // We can simply take the next consecutive place in the entries array.
             index = this.count;
-            this.count++;
+            this.__count++;
         }
+
+        const entry = new DictionaryEntry<TKey, TValue>();
+        entries[index] = entry;
 
         // Setting the fields of the entry
         entries[index].hashCode = hashCode;
@@ -81,6 +146,80 @@ export class Dictionary<TKey extends {toString(): string;}, TValue> implements I
         entries[index].value = value;
         buckets[targetBucket] = index; // The bucket will point to this entry from now on.
 
+        return this;
+    }
+
+    public clear(): void {
+        if (this.count > 0) {
+            let i: number;
+            let len: number;
+            for (i = 0, len = (this.__buckets as number[]).length; i < len; i += 1) {
+                (this.__buckets as number[])[i] = -1;
+            }
+
+            (this.__entries as IDictionaryEntry<TKey, TValue>[]).length = 0;
+            this.__freeList = -1;
+            this.__freeCount = 0;
+            this.__count = 0;
+        }
+    }
+
+    public containsKey(key: TKey): boolean {
+        const result = this.get(key);
+
+        return result === null;
+    }
+
+    public containsValue(value: TValue): boolean {
+        const compare = this.compare;
+        const entries = this.__entries as IDictionaryEntry<TKey, TValue>[];
+
+        let i: number;
+        for (i = 0; i < this.count; i++) {
+            if (entries[i].hashCode >= 0 && compare(entries[i].value as TValue, value) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public remove(key: TKey): boolean {
+        if (key === null) {
+            // throw error
+        }
+
+        const compare = this.compare;
+        const buckets = this.__buckets as number[];
+        const entries = this.__entries as IDictionaryEntry<TKey, TValue>[];
+
+        if (buckets !== null) {
+            const hashCode = HashHelper.getHashCode<TKey>(key) & 0x7FFFFFFF;
+            const targetBucket = hashCode % buckets.length;
+
+            let last = -1;
+            let i: number;
+            for (i = buckets[targetBucket]; i >= 0; last = i, i = entries[i].next) {
+                if (entries[i].hashCode === hashCode && compare(entries[i].key as TKey, key) === 0) {
+                    if (last < 0) {
+                        buckets[targetBucket] = entries[i].next;
+                    } else {
+                        entries[last].next = entries[i].next;
+                    }
+
+                    entries[i].hashCode = -1;
+                    entries[i].next = this.__freeList;
+                    entries[i].key = null;
+                    entries[i].value = null;
+                    this.__freeList = i;
+                    this.__freeCount++;
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private __initialize(capacity: number): void {
@@ -93,9 +232,33 @@ export class Dictionary<TKey extends {toString(): string;}, TValue> implements I
         for (i = 0, len = this.__buckets.length; i < len; i++) {
             this.__buckets[i] = -1;
         }
+
+        this.__freeList = -1;
     }
 
-    private __resize(): void {}
+    private __resize(newSize: number): void {
+        Contract.Assert(newSize >= entries.Length);
+        int[] newBuckets = new int[newSize];
+        for (int i = 0; i < newBuckets.Length; i++) newBuckets[i] = -1;
+        Entry[] newEntries = new Entry[newSize];
+        Array.Copy(entries, 0, newEntries, 0, count);
+        if(forceNewHashCodes) {
+            for (int i = 0; i < count; i++) {
+                if(newEntries[i].hashCode != -1) {
+                    newEntries[i].hashCode = (comparer.GetHashCode(newEntries[i].key) & 0x7FFFFFFF);
+                }
+            }
+        }
+        for (int i = 0; i < count; i++) {
+            if (newEntries[i].hashCode >= 0) {
+                int bucket = newEntries[i].hashCode % newSize;
+                newEntries[i].next = newBuckets[bucket];
+                newBuckets[bucket] = i;
+            }
+        }
+        buckets = newBuckets;
+        entries = newEntries;
+    }
 }
 
 class HashHelper {

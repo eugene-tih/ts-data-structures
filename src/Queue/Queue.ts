@@ -1,6 +1,6 @@
 import {AbstractArrayStructure} from '../AbstractArrayStructure';
 
-export class Queue<T> extends AbstractArrayStructure<T> {
+export class Queue<T = never> extends AbstractArrayStructure<T> {
     constructor(size: number = 0) {
         super('Queue', size);
     }

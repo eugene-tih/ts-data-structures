@@ -1,7 +1,7 @@
 import {AbstractBinaryTree} from '../AbstractBinaryTree';
 import {BinaryTreeNode} from './BinaryTreeNode';
 
-export class BinaryTree<T> extends AbstractBinaryTree<T> {
+export class BinaryTree<T = never> extends AbstractBinaryTree<T> {
     public constructor() {
         super('BinaryTree');
     }

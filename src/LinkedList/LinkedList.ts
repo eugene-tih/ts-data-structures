@@ -2,7 +2,7 @@ import {ILinkedList} from './ILinkedList';
 import {ILinkedListNode} from './ILinkedListNode';
 import {LinkedListNode} from './LinkedListNode';
 
-export class LinkedList<T> implements ILinkedList<T> {
+export class LinkedList<T = never> implements ILinkedList<T> {
     public count: number;
     public first: ILinkedListNode<T> | null;
     public last: ILinkedListNode<T> | null;
