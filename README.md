@@ -8,18 +8,18 @@ Build was tested on Mac, but probably will work on Linux and Windows.
 
 ## List of structures
 
--   Linked List (Double)
--   Queue
--   Stack
--   Priority Queue
--   Dictionary (HashMap)
--   Heap
+-   [Linked List (Double)](src/LinkedList)
+-   [Queue](src/Queue)
+-   [Stack](src/Stack)
+-   [Priority Queue](src/PriorityQueue) (under development)
+-   [Dictionary (HashMap)](src/Dictionary)
+-   [Heap](src/Heap)
 -   Tree
-    -   Binary Tree
-    -   Binary Search Tree
-    -   Red-Black Tree
-    -   AVL Tree
--   Bloom Filter
+    -   [Binary Tree](src/Tree/BinaryTree)
+    -   [Binary Search Tree](src/Tree/BinarySearchTree)
+    -   Red-Black Tree (under development)
+    -   [AVL Tree](src/Tree/AVLTree)
+-   Bloom Filter (under development)
 
 ## How to use this repository
 
@@ -40,6 +40,12 @@ npm install
 
 ```
 npm run build
+```
+
+**Run tests**
+
+```
+npm run test
 ```
 
 ## Sources
