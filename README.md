@@ -30,6 +30,7 @@ Just to try to work with Data Structures:
 -   Choose one of preferable DS and play with it
 
 Run these commands only if you want to change something:
+
 **Install all dependencies**
 
 ```
