@@ -11,7 +11,7 @@ cat ./node_modules/normalize.css/normalize.css \
 cat ./assets/script.js > ./build/script.js
 
 # bundle image
-cp ./assets/*.jpg ./build
+cp ./assets/*.jpg ./assets/*.png ./assets/*.gif ./build
 
 npm run build:tsc
 npm run build:rollup

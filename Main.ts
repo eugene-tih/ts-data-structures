@@ -7,4 +7,14 @@ import {AVLTree} from './src/Tree/AVLTree/AVLTree';
 import {BinarySearchTree} from './src/Tree/BinarySearchTree/BinarySearchTree';
 import {BinaryTree} from './src/Tree/BinaryTree/BinaryTree';
 
-console.log('Loaded: ', Dictionary, Heap, Queue, Stack, AVLTree, BinarySearchTree, BinaryTree, LinkedList);
+console.log(
+    'Loaded: ',
+    Dictionary.name,
+    Heap.name,
+    Queue.name,
+    Stack.name,
+    AVLTree.name,
+    BinarySearchTree.name,
+    BinaryTree.name,
+    LinkedList.name
+);

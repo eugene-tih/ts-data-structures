@@ -21,7 +21,7 @@ export class Dictionary<TKey extends {toString(): string} = never, TValue = neve
         this.__freeCount = 0;
         this.__count = 0;
 
-        this.__errorName = 'Dictionary';
+        this.__errorName = 'TDictionary';
     }
 
     get count(): number {

@@ -5,7 +5,7 @@ export class Stack<T = never> extends AbstractArrayStructure<T> {
         super('Stack', size);
     }
 
-    // Returns the object at the beginning of the Stack<T> without removing it
+    // Returns the object at the top of the Stack<T> without removing it
     peek(): T {
         if (!this.count) {
             throw this._errorCreator('Stack contains no elements');
@@ -20,11 +20,11 @@ export class Stack<T = never> extends AbstractArrayStructure<T> {
             throw this._errorCreator('Stack contains no elements');
         }
 
-        return this._array.pop() as T;
+        return this._array.shift() as T;
     }
 
     // Inserts an object at the top of the Stack<T>.
     push(value: T): void {
-        this._array.push(value);
+        this._array.unshift(value);
     }
 }

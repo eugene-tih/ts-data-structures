@@ -283,6 +283,6 @@ describe('LinkedList', () => {
 
         linkedList.copyTo(array);
 
-        expect(array).toEqual(['Hello', 'World', 'John']);
+        expect(array).toStrictEqual(['Hello', 'World', 'John']);
     });
 });

@@ -56,3 +56,4 @@ npm run build
 -   Make all structures iterable using native JS iterator
 -   Add to IBinaryTreeNodeCommon parents
 -   Rewrite Rollup config (get rid off Main.ts file)
+-   Finish develop build
