@@ -49,7 +49,7 @@ export class BinarySearchTree<T = never> extends AbstractBinaryTree<T> {
 
     public remove(value: T): this {
         if (!this._root) {
-            throw this._errorCreator('Value to remove was not found in the tree');
+            throw this._errorCreator(`Value to remove was not found in the ${this._className}`);
         }
 
         const compare = this.compare;
@@ -64,7 +64,7 @@ export class BinarySearchTree<T = never> extends AbstractBinaryTree<T> {
             // We are looking for node to remove. If we do not find it then we will throw an error
             if (compareResult > 0) {
                 if (!nodeToRemove.right) {
-                    throw this._errorCreator('Value to remove was not found in the tree');
+                    throw this._errorCreator(`Value to remove was not found in the ${this._className}`);
                 }
 
                 parentNode = nodeToRemove;
@@ -74,7 +74,7 @@ export class BinarySearchTree<T = never> extends AbstractBinaryTree<T> {
 
             if (compareResult < 0) {
                 if (!nodeToRemove.left) {
-                    throw this._errorCreator('Value to remove was not found in the tree');
+                    throw this._errorCreator(`Value to remove was not found in the ${this._className}`);
                 }
 
                 parentNode = nodeToRemove;

@@ -8,7 +8,7 @@ export class Stack<T = never> extends AbstractArrayStructure<T> {
     // Returns the object at the top of the Stack<T> without removing it
     peek(): T {
         if (!this.count) {
-            throw this._errorCreator('Stack contains no elements');
+            throw this._errorCreator(`${this._className} contains no elements`);
         }
 
         return this._array[0];
@@ -17,7 +17,7 @@ export class Stack<T = never> extends AbstractArrayStructure<T> {
     // Removes and returns the object at the top of the Stack<T>.
     pop(): T {
         if (!this.count) {
-            throw this._errorCreator('Stack contains no elements');
+            throw this._errorCreator(`${this._className} contains no elements`);
         }
 
         return this._array.shift() as T;

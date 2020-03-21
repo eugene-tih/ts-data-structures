@@ -8,7 +8,7 @@ export class Queue<T = never> extends AbstractArrayStructure<T> {
     // Removes and returns the object at the beginning of the Queue<T>
     dequeue(): T {
         if (!this.count) {
-            throw this._errorCreator('Queue contains no elements');
+            throw this._errorCreator(`${this._className} contains no elements`);
         }
 
         return this._array.shift() as T;
@@ -22,7 +22,7 @@ export class Queue<T = never> extends AbstractArrayStructure<T> {
     // Returns the object at the beginning of the Queue<T> without removing it
     peek(): T {
         if (!this.count) {
-            throw this._errorCreator('Queue contains no elements');
+            throw this._errorCreator(`${this._className} contains no elements`);
         }
 
         return this._array[0];

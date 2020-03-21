@@ -42,7 +42,7 @@ export class BinaryTree<T = never> extends AbstractBinaryTree<T> {
         let nodeToRemove: BinaryTreeNode<T> | null = this.search(value);
 
         if (nodeToRemove === null) {
-            throw this._errorCreator('Value to remove not found in the tree');
+            throw this._errorCreator(`Value to remove was not found in the ${this._className}`);
         }
 
         let parentNode: BinaryTreeNode<T> | undefined;

@@ -5,10 +5,10 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
     protected _root: IBinaryTreeNodeCommon<T> | null;
     protected _size: number;
 
-    private readonly __errorName: string;
+    protected readonly _className: string;
 
     protected constructor(className: string) {
-        this.__errorName = 'T' + className;
+        this._className = className;
         this._root = null;
         this._size = 0;
     }
@@ -158,7 +158,7 @@ export abstract class AbstractBinaryTree<T> implements IBinaryTreeCommon<T> {
 
     protected _errorCreator(message: string): Error {
         const error = new Error(message);
-        error.name = this.__errorName;
+        error.name = 'T' + this._className;
         return error;
     }
 }

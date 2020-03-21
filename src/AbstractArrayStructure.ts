@@ -1,10 +1,10 @@
 export abstract class AbstractArrayStructure<T> {
     protected readonly _array: T[];
 
-    private readonly __errorName: string;
+    protected readonly _className: string;
 
     protected constructor(className: string, size: number = 0) {
-        this.__errorName = 'T' + className;
+        this._className = className;
         this._array = new Array(size);
     }
 
@@ -67,7 +67,7 @@ export abstract class AbstractArrayStructure<T> {
 
     protected _errorCreator(message: string): Error {
         const error = new Error(message);
-        error.name = this.__errorName;
+        error.name = 'T' + this._className;
         return error;
     }
 }

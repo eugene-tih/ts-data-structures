@@ -65,7 +65,7 @@ export class AVLTree<T = never> extends AbstractBinaryTree<T> {
         const nodeToRemove: AVLTreeNode<T> | null = this.search(value);
 
         if (!nodeToRemove) {
-            throw this._errorCreator('Value to remove was not found in the tree');
+            throw this._errorCreator(`Value to remove was not found in the ${this._className}`);
         }
 
         let parentNode = (nodeToRemove.parent || this._root) as AVLTreeNode<T>;

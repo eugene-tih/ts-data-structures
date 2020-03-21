@@ -89,7 +89,7 @@ export class Dictionary<TKey extends {toString(): string} = never, TValue = neve
 
     public add(key: TKey, value: TValue): this {
         if (key === null || key === undefined) {
-            throw this._errorCreator('Key value could not be `null` or `undefined`');
+            throw this._errorCreator(`Key value could not be 'null' or 'undefined'`);
         }
 
         if (this.__buckets === null) {
@@ -194,7 +194,7 @@ export class Dictionary<TKey extends {toString(): string} = never, TValue = neve
 
     public remove(key: TKey): boolean {
         if (key === null || key === undefined) {
-            throw this._errorCreator('Key value could not be `null` or `undefined`');
+            throw this._errorCreator(`Key value could not be 'null' or 'undefined'`);
         }
 
         const compare = this.compare;
