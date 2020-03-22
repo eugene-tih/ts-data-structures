@@ -6,6 +6,7 @@ import {Stack} from './src/Stack/Stack';
 import {AVLTree} from './src/Tree/AVLTree/AVLTree';
 import {BinarySearchTree} from './src/Tree/BinarySearchTree/BinarySearchTree';
 import {BinaryTree} from './src/Tree/BinaryTree/BinaryTree';
+import {PriorityQueue} from './src/PriorityQueue/PriorityQueue';
 
 console.log(
     'Loaded: ',
@@ -13,6 +14,7 @@ console.log(
     Heap.name,
     Queue.name,
     Stack.name,
+    PriorityQueue.name,
     AVLTree.name,
     BinarySearchTree.name,
     BinaryTree.name,
