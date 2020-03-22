@@ -11,7 +11,7 @@ Build was tested on Mac, but probably will work on Linux and Windows.
 -   [Linked List (Double)](src/LinkedList)
 -   [Queue](src/Queue)
 -   [Stack](src/Stack)
--   [Priority Queue](src/PriorityQueue) (under development)
+-   [Priority Queue](src/PriorityQueue)
 -   [Dictionary (HashMap)](src/Dictionary)
 -   [Heap](src/Heap)
 -   Tree
