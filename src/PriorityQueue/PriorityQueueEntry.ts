@@ -1,9 +1,9 @@
 export class PriorityQueueEntry<T> {
-    public value: T;
     public priorityIndex: number;
+    public arrayElementLink: T;
 
-    public constructor(value: T, priorityIndex: number) {
-        this.value = value;
+    public constructor(priorityIndex: number, arrayElementLink: T) {
         this.priorityIndex = priorityIndex;
+        this.arrayElementLink = arrayElementLink;
     }
 }

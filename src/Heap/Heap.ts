@@ -1,9 +1,14 @@
 import {IHeap} from './IHeap';
 import {AbstractHeap} from '../AbstractHeap';
+import {HeapType} from '../HeapType';
 
 export class Heap<T = never> extends AbstractHeap<T> implements IHeap<T> {
     constructor(size: number = 0) {
-        super('Heap', size);
+        super(HeapType.MAX, 'MaxHeap', size);
+    }
+
+    protected _comparePosition(valueA: T, valueB: T): number {
+        return this.compare(valueA, valueB);
     }
 
     public getMaxItem(): T | null {
@@ -11,10 +16,12 @@ export class Heap<T = never> extends AbstractHeap<T> implements IHeap<T> {
     }
 
     public insert(value: T): this {
-        return this._insert(value);
+        this._insert(value, this._array);
+        return this;
     }
 
     public remove(value: T): this {
-        return this._remove(value);
+        this._remove(value, this._array);
+        return this;
     }
 }

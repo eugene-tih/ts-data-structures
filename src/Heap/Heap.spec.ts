@@ -159,6 +159,20 @@ describe('Heap', () => {
 
             expect(heap.toArray()).toStrictEqual([16, 14, 12, 7, 9, 8]);
         });
+
+        it('should save right items order after removing top root item with two children', () => {
+            const heap = new Heap<number>();
+
+            heap.insert(10)
+                .insert(4)
+                .insert(6)
+                .insert(2)
+                .insert(1);
+
+            heap.remove(10);
+
+            expect(heap.toArray()).toStrictEqual([6, 4, 1, 2]);
+        });
     });
 
     it('should clear structure', () => {

@@ -1,45 +1,55 @@
-// import {IPriorityQueue} from './IPriorityQueue';
-// import {AbstractHeap} from '../AbstractHeap';
-//
-// export class PriorityQueue<T = never> extends AbstractHeap<T> implements IPriorityQueue<T> {
-//     constructor(size: number = 0) {
-//         super('PriorityQueue', size);
-//     }
-//
-//     public dequeue(): T {
-//         if (!this.count) {
-//             throw this._errorCreator('PriorityQueue contains no elements');
-//         }
-//
-//         const currentCompare = this.compare;
-//         this.compare = this.__priorityCompare;
-//
-//         const value = this._array[0] as T;
-//         super._remove(value);
-//
-//         this.compare = currentCompare;
-//
-//         return value;
-//     }
-//
-//     public enqueue(value: T, priorityIndex: number): void {
-//         const currentCompare = this.compare;
-//         this.compare = this.__priorityCompare;
-//
-//         this._insert(value);
-//
-//         this.compare = currentCompare;
-//     }
-//
-//     public peek(): T {
-//         if (!this.count) {
-//             throw this._errorCreator('PriorityQueue contains no elements');
-//         }
-//
-//         return this._array[0] as T;
-//     }
-//
-//     private __priorityCompare(valueA: T, valueB: T): number {
-//         return valueA === valueB ? 0 : valueA < valueB ? -1 : 1;
-//     }
-// }
+import {IPriorityQueue} from './IPriorityQueue';
+import {AbstractHeap} from '../AbstractHeap';
+import {HeapType} from '../HeapType';
+
+export class PriorityQueue<T = never> extends AbstractHeap<T | number> implements IPriorityQueue<T | number> {
+    private __prioritiesArray: number[];
+
+    constructor(size: number = 0) {
+        super(HeapType.MIN, 'PriorityQueue', size);
+        this.__prioritiesArray = [];
+    }
+
+    protected _comparePosition(valueA: number, valueB: number): number {
+        // make a minHeap
+        return valueA === valueB ? 0 : valueB < valueA ? -1 : 1;
+    }
+
+    public dequeue(): T {
+        if (!this.count) {
+            throw this._errorCreator(`${this._className} contains no elements`);
+        }
+
+        // We should always synchronize the array of values with the array of priorities
+        const value: T = this._array[0] as T;
+        const lastValue: T = this._array.pop() as T;
+
+        if (this.count) {
+            this._array[0] = lastValue;
+        }
+
+        this._remove(this.__prioritiesArray[0], this.__prioritiesArray);
+
+        return value;
+    }
+
+    public enqueue(value: T, priorityIndex: number): void {
+        // We should always synchronize the array of values with the array of priorities
+        this._array.push(value);
+        this._insert(priorityIndex, this.__prioritiesArray);
+    }
+
+    public peek(): T {
+        if (!this.count) {
+            throw this._errorCreator(`${this._className} contains no elements`);
+        }
+
+        return this._array[0] as T;
+    }
+
+    protected _swap(positionA: number, positionB: number, array: (number | T)[]): void {
+        // small trick that make swap in both arrays: values and priorities
+        super._swap(positionA, positionB, array);
+        super._swap(positionA, positionB, this._array);
+    }
+}
