@@ -7,9 +7,9 @@ The head of this queue is the least element with respect to the specified orderi
 
 ## Time Complexity
 
-| Access | Search | Insertion | Deletion  |
-| ------ | ------ | --------- | --------- |
-| O(1)   | O(n)   | O(log(n)) | O(log(n)) |
+| Access/Peek | Search | Insertion | Deletion  |
+| ----------- | ------ | --------- | --------- |
+| O(1)        | O(n)   | O(log(n)) | O(log(n)) |
 
 ## Space Complexity
 
