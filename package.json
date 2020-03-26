@@ -11,6 +11,7 @@
         "build:rollup": "rollup --config rollup.config.js",
         "test": "jest",
         "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+        "benchmark": "rm -rf /compiled-node && tsc -p ./tsconfig.node.json && node ./compiled-node/benchmark/PriorityQueue.js",
         "prettier:check": "prettier --check \"src/**/*.ts\""
     },
     "keywords": [
@@ -21,7 +22,7 @@
     "author": "Eugene Tykhonov <yevhen.tykhonov@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@types/jest": "^24.0.21",
+        "@types/jest": "^25.1.4",
         "http-server": "^0.12.1",
         "husky": "^3.0.9",
         "jest": "^25.2.0",
@@ -30,7 +31,7 @@
         "pretty-quick": "^2.0.0",
         "rollup": "^1.27.0",
         "ts-jest": "^25.2.1",
-        "typescript": "^3.6.4"
+        "typescript": "^3.8.3"
     },
     "husky": {
         "hooks": {
