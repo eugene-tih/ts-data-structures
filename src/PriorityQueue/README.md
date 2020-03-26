@@ -3,11 +3,19 @@
 A priority queue is a special type of queue in which each element is associated with a priority and is served according to its priority.
 If elements with the same priority occur, they are served according to their order in the queue.
 
-## Complexity
+The head of this queue is the least element with respect to the specified ordering.
+
+## Time Complexity
 
 | Access | Search | Insertion | Deletion  |
 | ------ | ------ | --------- | --------- |
-| O(n)   | O(n)   | O(log(n)) | O(log(n)) |
+| O(1)   | O(n)   | O(log(n)) | O(log(n)) |
+
+## Space Complexity
+
+| Worst |
+| ----- |
+| O(n)  |
 
 ## Example
 

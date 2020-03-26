@@ -34,6 +34,10 @@ export class PriorityQueue<T = never> extends AbstractHeap<T | number> implement
     }
 
     public enqueue(value: T, priorityIndex: number): void {
+        if (priorityIndex < 0) {
+            throw this._errorCreator(`Priority index can not be less than 0`);
+        }
+
         // We should always synchronize the array of values with the array of priorities
         this._array.push(value);
         this._insert(priorityIndex, this.__prioritiesArray);

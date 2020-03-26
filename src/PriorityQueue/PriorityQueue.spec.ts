@@ -7,8 +7,8 @@ describe('PriorityQueue', () => {
         expect(myPriorityQueue.count).toBe(0);
     });
 
-    describe('Tests connected to insertion', () => {
-        it('should insert one item', () => {
+    describe('Tests connected to enqueuing', () => {
+        it('should enqueue one item', () => {
             const myPriorityQueue = new PriorityQueue<string>();
 
             myPriorityQueue.enqueue('One', 1);
@@ -17,7 +17,7 @@ describe('PriorityQueue', () => {
             expect(myPriorityQueue.peek()).toBe('One');
         });
 
-        it('should insert bunch of items', () => {
+        it('should enqueue bunch of items', () => {
             const myPriorityQueue = new PriorityQueue<string>();
 
             myPriorityQueue.enqueue('Three', 3);
@@ -29,6 +29,26 @@ describe('PriorityQueue', () => {
             expect(myPriorityQueue.count).toBe(5);
             expect(myPriorityQueue.peek()).toBe('One');
         });
+
+        it('should enqueue bunch of items different types', () => {
+            const myPriorityQueue = new PriorityQueue<any>();
+
+            myPriorityQueue.enqueue(3, 3);
+            myPriorityQueue.enqueue(null, 4);
+            myPriorityQueue.enqueue(true, 1);
+
+            expect(myPriorityQueue.count).toBe(3);
+            expect(myPriorityQueue.peek()).toBe(true);
+        });
+
+        it('should throw an error if enqueue item with negative priority', () => {
+            const myPriorityQueue = new PriorityQueue<string>();
+
+            expect(() => {
+                myPriorityQueue.enqueue('One', -1);
+            }).toThrowError();
+            expect(myPriorityQueue.count).toBe(0);
+        });
     });
 
     describe('Tests connected to peeking', () => {
@@ -38,6 +58,17 @@ describe('PriorityQueue', () => {
             myPriorityQueue.enqueue('Two', 2);
             myPriorityQueue.enqueue('One', 1);
 
+            expect(myPriorityQueue.peek()).toBe('One');
+        });
+
+        it('should multiple peeking return the same element', () => {
+            const myPriorityQueue = new PriorityQueue<string>();
+
+            myPriorityQueue.enqueue('Two', 2);
+            myPriorityQueue.enqueue('One', 1);
+
+            expect(myPriorityQueue.peek()).toBe('One');
+            expect(myPriorityQueue.peek()).toBe('One');
             expect(myPriorityQueue.peek()).toBe('One');
         });
 
@@ -72,18 +103,19 @@ describe('PriorityQueue', () => {
         });
     });
 
-    describe('Tests connected to removing', () => {
-        it('should remove one item', () => {
+    describe('Tests connected to dequeuing', () => {
+        it('should deque one item without children', () => {
             const myPriorityQueue = new PriorityQueue<string>();
 
             myPriorityQueue.enqueue('One', 1);
-            myPriorityQueue.dequeue();
+            const result = myPriorityQueue.dequeue();
 
-            expect(myPriorityQueue.count).toBe(0);
+            expect(result).toBe('One');
             expect(myPriorityQueue.contains('One')).toBe(false);
+            expect(myPriorityQueue.count).toBe(0);
         });
 
-        it('should remove one item with two children', () => {
+        it('should deque one item with children', () => {
             const myPriorityQueue = new PriorityQueue<string>();
 
             myPriorityQueue.enqueue('Ten', 10);
@@ -92,14 +124,15 @@ describe('PriorityQueue', () => {
             myPriorityQueue.enqueue('Two', 2);
             myPriorityQueue.enqueue('One', 1);
 
-            myPriorityQueue.dequeue();
+            const result = myPriorityQueue.dequeue();
 
+            expect(result).toBe('One');
             expect(myPriorityQueue.count).toBe(4);
             expect(myPriorityQueue.contains('One')).toBe(false);
             expect(myPriorityQueue.peek()).toBe('Two');
         });
 
-        it('should remove bunch of items', () => {
+        it('should deque bunch of items', () => {
             const myPriorityQueue = new PriorityQueue<string>();
 
             myPriorityQueue.enqueue('Two', 2);
@@ -111,7 +144,21 @@ describe('PriorityQueue', () => {
 
             expect(myPriorityQueue.count).toBe(1);
             expect(myPriorityQueue.contains('One')).toBe(false);
+            expect(myPriorityQueue.contains('Two')).toBe(false);
             expect(myPriorityQueue.peek()).toBe('Three');
+        });
+
+        it('should deque bunch of items with the same priority in the same order as they were enqueued', () => {
+            const myPriorityQueue = new PriorityQueue<string>();
+
+            myPriorityQueue.enqueue('Should be first', 2);
+            myPriorityQueue.enqueue('Should be second', 2);
+
+            const result1 = myPriorityQueue.dequeue();
+            const result2 = myPriorityQueue.dequeue();
+
+            expect(result1).toBe('Should be first');
+            expect(result2).toBe('Should be second');
         });
 
         it('should throw an error if priorityQueue is empty', () => {
@@ -158,5 +205,19 @@ describe('PriorityQueue', () => {
         myPriorityQueue.copyTo(array);
 
         expect(array).toStrictEqual(['One', 'Three', 'Two']);
+    });
+
+    it('should copy values to array begging from specific index', () => {
+        const myPriorityQueue = new PriorityQueue<string>();
+
+        myPriorityQueue.enqueue('Three', 3);
+        myPriorityQueue.enqueue('Two', 2);
+        myPriorityQueue.enqueue('One', 1);
+
+        const array: string[] = ['My array'];
+
+        myPriorityQueue.copyTo(array, 1);
+
+        expect(array).toStrictEqual(['My array', 'One', 'Three', 'Two']);
     });
 });
