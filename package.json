@@ -2,16 +2,9 @@
     "name": "ts-data-structures",
     "version": "1.0.0",
     "description": "All basic and popular data structures are written with TypeScript",
-    "main": "index.html",
     "scripts": {
-        "develop": "nodemon config/develop.sh",
-        "http-server": "http-server",
-        "build": "sh ./config/build.sh",
-        "build:tsc": "tsc -p ./tsconfig.json",
-        "build:rollup": "rollup --config rollup.config.js",
         "test": "jest",
         "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-        "benchmark": "rm -rf /compiled-node && tsc -p ./tsconfig.node.json && node ./compiled-node/benchmark/PriorityQueue.js",
         "prettier:check": "prettier --check \"src/**/*.ts\""
     },
     "keywords": [
@@ -22,32 +15,20 @@
     "author": "Eugene Tykhonov <yevhen.tykhonov@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@types/jest": "^25.1.4",
-        "http-server": "^0.12.1",
-        "husky": "^3.0.9",
-        "jest": "^25.2.0",
-        "nodemon": "^2.0.2",
-        "prettier": "^1.18.2",
-        "pretty-quick": "^2.0.0",
-        "rollup": "^1.27.0",
-        "ts-jest": "^25.2.1",
+        "@types/jest": "^26.0.20",
+        "husky": "^5.1.3",
+        "jest": "^26.6.3",
+        "prettier": "^2.2.1",
+        "pretty-quick": "^3.1.0",
+        "ts-jest": "^26.5.3"
+    },
+    "dependencies": {
         "typescript": "^3.8.3"
     },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged"
         }
-    },
-    "nodemonConfig": {
-        "verbose": true,
-        "execMap": {
-            "sh": "bash"
-        },
-        "watch": [
-            "./assets"
-        ],
-        "delay": 2500,
-        "ext": "js,css,html"
     },
     "jest": {
         "preset": "ts-jest",
@@ -61,8 +42,5 @@
             "ts",
             "js"
         ]
-    },
-    "dependencies": {
-        "normalize.css": "^8.0.1"
     }
 }

@@ -2,7 +2,7 @@ import {AbstractArrayStructure} from './AbstractArrayStructure';
 import {HeapType} from './HeapType';
 
 export abstract class AbstractHeap<T> extends AbstractArrayStructure<T> {
-    private __heapType: HeapType;
+    private readonly __heapType: HeapType;
 
     protected constructor(heapType: HeapType, className: string, size: number = 0) {
         super(className, size);

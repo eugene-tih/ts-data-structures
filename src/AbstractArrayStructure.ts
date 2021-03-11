@@ -21,9 +21,7 @@ export abstract class AbstractArrayStructure<T> {
     }
 
     public contains(value: T): boolean {
-        const result = this._find(value);
-
-        return result > -1;
+        return this._find(value) > -1;
     }
 
     public copyTo(array: T[], index: number = 0): void {
@@ -68,6 +66,7 @@ export abstract class AbstractArrayStructure<T> {
     protected _errorCreator(message: string): Error {
         const error = new Error(message);
         error.name = 'T' + this._className;
+
         return error;
     }
 }

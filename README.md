@@ -23,24 +23,10 @@ Build was tested on Mac, but probably will work on Linux and Windows.
 
 ## How to use this repository
 
-Just to try to work with Data Structures:
-
--   Open `index.html` file
--   Open browser console
--   Choose one of preferable DS and play with it
-
-Run these commands only if you want to change something:
-
 **Install all dependencies**
 
 ```
 npm install
-```
-
-**Make build**
-
-```
-npm run build
 ```
 
 **Run tests**
@@ -62,5 +48,4 @@ npm run test
 
 -   Make all structures iterable using native JS iterator
 -   Add to IBinaryTreeNodeCommon parents
--   Rewrite Rollup config (get rid off Main.ts file)
--   Finish develop build
+-   Make way to play with structure

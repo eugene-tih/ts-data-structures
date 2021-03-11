@@ -3,11 +3,10 @@ import {AbstractHeap} from '../AbstractHeap';
 import {HeapType} from '../HeapType';
 
 export class PriorityQueue<T = never> extends AbstractHeap<T | number> implements IPriorityQueue<T | number> {
-    private __prioritiesArray: number[];
+    private readonly __prioritiesArray: number[] = [];
 
     constructor(size: number = 0) {
         super(HeapType.MIN, 'PriorityQueue', size);
-        this.__prioritiesArray = [];
     }
 
     protected _comparePosition(valueA: number, valueB: number): number {
